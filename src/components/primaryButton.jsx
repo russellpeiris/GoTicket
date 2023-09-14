@@ -9,12 +9,12 @@ export const PrimaryButton = ({text, onPress, width, height}) => {
     backgroundColor: theme.primaryPink,
     borderWidth: 0,
     color: 'black',
-    width: width || 360,
+    width: width || '100%',
     height: height || 65,
     borderRadius: 8,
   };
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{width: '100%'}}>
     <Button
       TouchableComponent={TouchableOpacity}
       onPress={onPress}

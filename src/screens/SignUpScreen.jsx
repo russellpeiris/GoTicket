@@ -4,21 +4,30 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { PrimaryButton, InputField } from '../components'
 import { Text } from '@rneui/themed'
-
+import { useNavigation } from '@react-navigation/native'
+import { useEffect } from 'react'
 const SignUpScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  // const [email, setEmail] = useState('')
+  // const [password, setPassword] = useState('')
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    phoneNumber: '',
+    dueDate: '',
+  })
   const [error, setError] = useState({ email: '', password: '' })
-
+  const navigation = useNavigation()
   const handleSignUp = async () => {
     setError({ email: '', password: '' })
 
-    if (!email) {
+    if (!user.email) {
       setError((prevError) => ({ ...prevError, email: 'Email is required' }))
       return
     }
 
-    if (!password) {
+    if (!user.password) {
       setError((prevError) => ({
         ...prevError,
         password: 'Password is required',
@@ -27,7 +36,7 @@ const SignUpScreen = () => {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password)
+      await createUserWithEmailAndPassword(auth, user.email, user.password)
     } catch (error) {
       const errorCode = error.code
       const errorMessage = error.message
@@ -66,12 +75,42 @@ const SignUpScreen = () => {
     }
   }
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.replace('Home')
+      }
+    })
+    return unsubscribe
+  }, []) 
+  
   return (
     <KeyboardAvoidingView style={styles.container} behavior="scroll">
-      <View>
-        <Text style={styles.title}>Register</Text>
-      </View>
       <View style={styles.inputContainer}>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Register</Text>
+        <Text style={{}}>Already have an account?
+          <Text onPress={() => navigation.replace('Login')}> Login</Text>
+        </Text>
+      </View>
+      <InputField
+          placeholder="First Name"
+          value={email}
+          onChangeText={(value) => {
+            setEmail(value)
+            setError((prevError) => ({ ...prevError, email: '' }))
+          }}
+          errorMessage={error.email}
+        />
+        <InputField
+          placeholder="Last Name"
+          value={email}
+          onChangeText={(value) => {
+            setEmail(value)
+            setError((prevError) => ({ ...prevError, email: '' }))
+          }}
+          errorMessage={error.email}
+        />
         <InputField
           placeholder="Email"
           value={email}
@@ -79,9 +118,10 @@ const SignUpScreen = () => {
             setEmail(value)
             setError((prevError) => ({ ...prevError, email: '' }))
           }}
-          onBlur={validateEmail}
+          onBlur={
+            validateEmail
+          }
           errorMessage={error.email}
-          leftIcon={{ type: 'font-awesome', name: 'envelope', size: 18}}
         />
         <InputField
           placeholder="Password"
@@ -92,9 +132,30 @@ const SignUpScreen = () => {
           }}
           secureTextEntry
           errorMessage={error.password}
-          leftIcon={{ type: 'font-awesome', name: 'lock', size: 18}}
-          rightIcon={{ type: 'font-awesome', name: 'eye', size: 18}}
         />
+        <InputField
+          placeholder="Phone Number"
+          value={password}
+          onChangeText={(value) => {
+            setPassword(value)
+            setError((prevError) => ({ ...prevError, password: '' }))
+          }}
+          secureTextEntry
+          errorMessage={error.password}
+        />
+        <InputField
+          placeholder="Expected due date"
+          value={password}
+          onChangeText={(value) => {
+            setPassword(value)
+            setError((prevError) => ({ ...prevError, password: '' }))
+          }}
+          secureTextEntry
+          errorMessage={error.password}
+        />
+      </View>
+      <View>
+        <Text >By setting up the account you agree to share your data with the Hospital</Text>
       </View>
       <View style={styles.buttonContainer}>
         <PrimaryButton onPress={handleSignUp} text="Register" />
@@ -106,29 +167,39 @@ const SignUpScreen = () => {
 export default SignUpScreen
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    width: '100%',
+    backgroundColor:'white',
+    // paddingLeft: 10
+  },
   title: {
-    fontSize: 46,
+    fontSize: 36,
     fontFamily: 'nunito-bold',
-    marginBottom: 40,
+    backgroundColor: 'white'
   },
   container: {
+    // padding: 20,
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
     height: '100%',
+    paddingHorizontal: 0,
+    
   },
   inputContainer: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    marginHorizontal: 0,
+    paddingHorizontal:0,
+    backgroundColor: 'white'
   },
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 0,
-    width: '60%',
+    width: '100%',
   },
 })

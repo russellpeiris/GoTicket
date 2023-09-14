@@ -3,6 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import SignUpScreen from './src/screens/SignUpScreen';
+import LogInScreen from './src/screens/LogInScreen';
+import HomeScreen from './src/screens/HomeScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -26,13 +28,23 @@ export default function App() {
     return null;
   }
   return (
-    <SafeAreaProvider onLayout={handleOnLayout}>
+    <SafeAreaProvider onLayout={handleOnLayout} style={{padding: 16}}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             options={{headerShown: false}}
-            name="Login"
+            name="Register"
             component={SignUpScreen}
+          />
+          <Stack.Screen
+            options={{headerShown: false}}
+            name="Login"
+            component={LogInScreen}
+          />
+          <Stack.Screen
+            options={{headerShown: true}}
+            name="Home"
+            component={HomeScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>
