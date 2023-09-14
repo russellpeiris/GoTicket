@@ -14,6 +14,7 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const Stack = createNativeStackNavigator();
   const [isLoaded] = useFonts({
+    'nunito-medium': require('./assets/fonts/Nunito-Medium.ttf'), // 'Nunito-Medium
     'nunito-regular': require('./assets/fonts/Nunito-Regular.ttf'),
     'nunito-semi-bold': require('./assets/fonts/Nunito-SemiBold.ttf'),
     'nunito-bold': require('./assets/fonts/Nunito-Bold.ttf'),
@@ -28,7 +29,7 @@ export default function App() {
     return null;
   }
   return (
-    <SafeAreaProvider onLayout={handleOnLayout} style={{padding: 16}}>
+    <SafeAreaProvider onLayout={handleOnLayout}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen

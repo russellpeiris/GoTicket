@@ -6,10 +6,14 @@ import { PrimaryButton, InputField } from '../components'
 import { Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
+import theme from '../../theme'
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from 'react-native-gesture-handler'
+import Loader from '../components/loader'
 const SignUpScreen = () => {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
-  const [user, setUser] = useState({
+  const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
     email: '',
@@ -18,26 +22,50 @@ const SignUpScreen = () => {
     dueDate: '',
   })
   const [error, setError] = useState({ email: '', password: '' })
+  const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation()
   const handleSignUp = async () => {
-    setError({ email: '', password: '' })
+    setError({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      phoneNumber: '',
+      dueDate: '',
+    })
 
-    if (!user.email) {
+    if (!inputs.firstName) {
+      setError((prevError) => ({
+        ...prevError,
+        firstName: 'First Name is required',
+      }))
+      return
+    }
+    if (!inputs.lastName) {
+      setError((prevError) => ({
+        ...prevError,
+        lastName: 'Last Name is required',
+      }))
+      return
+    }
+
+    if (!inputs.email) {
       setError((prevError) => ({ ...prevError, email: 'Email is required' }))
       return
     }
 
-    if (!user.password) {
+    if (!inputs.password) {
       setError((prevError) => ({
         ...prevError,
         password: 'Password is required',
       }))
       return
     }
-
+    setIsLoading(true)
     try {
-      await createUserWithEmailAndPassword(auth, user.email, user.password)
+      await createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
     } catch (error) {
+      error && setIsLoading(false)
       const errorCode = error.code
       const errorMessage = error.message
 
@@ -62,16 +90,52 @@ const SignUpScreen = () => {
     }
   }
 
-  const validateEmail = () => {
+  const validate = (field) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const nameRegex = /^[A-Za-z\s\-']+$/
+    const phoneNumberRegex = /^\d{10}$/
 
-    if (!email) {
-      setError((prevError) => ({ ...prevError, email: '' }))
-    } else if (!emailRegex.test(email)) {
-      setError((prevError) => ({
-        ...prevError,
-        email: 'Please enter a valid email.',
-      }))
+    switch (field) {
+      case 'email':
+        if (!inputs.email) {
+          setError((prevError) => ({ ...prevError, email: '' }))
+        } else if (!emailRegex.test(inputs.email)) {
+          setError((prevError) => ({
+            ...prevError,
+            email: 'Please enter a valid email.',
+          }))
+        }
+        break
+      case 'firstName':
+        if (!inputs.firstName) {
+          setError((prevError) => ({ ...prevError, firstName: '' }))
+        } else if (!nameRegex.test(inputs.firstName)) {
+          setError((prevError) => ({
+            ...prevError,
+            firstName: 'Name can only contain alphabetic characters',
+          }))
+        }
+        break
+      case 'lastName':
+        if (!inputs.lastName) {
+          setError((prevError) => ({ ...prevError, lastName: '' }))
+        } else if (!nameRegex.test(inputs.lastName)) {
+          setError((prevError) => ({
+            ...prevError,
+            lastName: 'Name can only contain alphabetic characters',
+          }))
+        }
+        break
+      case 'phoneNumber':
+        if (!inputs.phoneNumber) {
+          setError((prevError) => ({ ...prevError, phoneNumber: '' }))
+        } else if (!phoneNumberRegex.test(inputs.phoneNumber)) {
+          setError((prevError) => ({
+            ...prevError,
+            phoneNumber: 'Please enter a valid phone number',
+          }))
+        }
+        break
     }
   }
 
@@ -82,85 +146,123 @@ const SignUpScreen = () => {
       }
     })
     return unsubscribe
-  }, []) 
-  
+  }, [])
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="scroll">
-      <View style={styles.inputContainer}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Register</Text>
-        <Text style={{}}>Already have an account?
-          <Text onPress={() => navigation.replace('Login')}> Login</Text>
-        </Text>
-      </View>
-      <InputField
-          placeholder="First Name"
-          value={email}
-          onChangeText={(value) => {
-            setEmail(value)
-            setError((prevError) => ({ ...prevError, email: '' }))
-          }}
-          errorMessage={error.email}
-        />
-        <InputField
-          placeholder="Last Name"
-          value={email}
-          onChangeText={(value) => {
-            setEmail(value)
-            setError((prevError) => ({ ...prevError, email: '' }))
-          }}
-          errorMessage={error.email}
-        />
-        <InputField
-          placeholder="Email"
-          value={email}
-          onChangeText={(value) => {
-            setEmail(value)
-            setError((prevError) => ({ ...prevError, email: '' }))
-          }}
-          onBlur={
-            validateEmail
-          }
-          errorMessage={error.email}
-        />
-        <InputField
-          placeholder="Password"
-          value={password}
-          onChangeText={(value) => {
-            setPassword(value)
-            setError((prevError) => ({ ...prevError, password: '' }))
-          }}
-          secureTextEntry
-          errorMessage={error.password}
-        />
-        <InputField
-          placeholder="Phone Number"
-          value={password}
-          onChangeText={(value) => {
-            setPassword(value)
-            setError((prevError) => ({ ...prevError, password: '' }))
-          }}
-          secureTextEntry
-          errorMessage={error.password}
-        />
-        <InputField
-          placeholder="Expected due date"
-          value={password}
-          onChangeText={(value) => {
-            setPassword(value)
-            setError((prevError) => ({ ...prevError, password: '' }))
-          }}
-          secureTextEntry
-          errorMessage={error.password}
-        />
-      </View>
-      <View>
-        <Text >By setting up the account you agree to share your data with the Hospital</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <PrimaryButton onPress={handleSignUp} text="Register" />
-      </View>
-    </KeyboardAvoidingView>
+    <>
+      <Loader visible={isLoading} />
+      <KeyboardAvoidingView style={styles.container} behavior="height">
+        <GestureHandlerRootView>
+          <ScrollView style={{ margin: 16 }}>
+            <View style={styles.inputContainer}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>Register</Text>
+                <Text
+                  style={{
+                    fontFamily: 'nunito-semi-bold',
+                    fontSize: 18,
+                    marginTop: 10,
+                    marginBottom: 30,
+                  }}
+                >
+                  Already have an account?
+                  <Text
+                    onPress={() => navigation.replace('Login')}
+                    style={{
+                      color: theme.primaryPink,
+                      fontFamily: 'nunito-semi-bold',
+                    }}
+                  >
+                    {' '}
+                    Login
+                  </Text>
+                </Text>
+              </View>
+              <InputField
+                placeholder="First Name"
+                value={inputs.firstName}
+                onChangeText={(value) => {
+                  setInputs({ ...value, firstName: value })
+                  setError((prevError) => ({ ...prevError, firstName: '' }))
+                }}
+                onBlur={() => validate('firstName')}
+                errorMessage={error.firstName}
+              />
+              <InputField
+                placeholder="Last Name"
+                value={inputs.lastName}
+                onChangeText={(value) => {
+                  setInputs({ ...inputs, lastName: value })
+                  setError((prevError) => ({ ...prevError, lastName: '' }))
+                }}
+                onBlur={() => validate('lastName')}
+                errorMessage={error.lastName}
+                type={'text'}
+              />
+              <InputField
+                placeholder="Email"
+                value={inputs.email}
+                onChangeText={(value) => {
+                  setInputs({ ...inputs, email: value })
+                  setError((prevError) => ({ ...prevError, email: '' }))
+                }}
+                onBlur={() => validate('email')}
+                errorMessage={error.email}
+                type={'email'}
+              />
+              <InputField
+                placeholder="Password"
+                value={inputs.password}
+                onChangeText={(value) => {
+                  setInputs({ ...inputs, password: value })
+                  setError((prevError) => ({ ...prevError, password: '' }))
+                }}
+                secureTextEntry
+                rightIcon={{ type: 'font-awesome', name: 'eye', size: 18 }}
+                errorMessage={error.password}
+                type={'text'}
+              />
+              <InputField
+                placeholder="Phone Number"
+                value={inputs.phoneNumber}
+                onChangeText={(value) => {
+                  setInputs({ ...inputs, phoneNumber: value })
+                  setError((prevError) => ({ ...prevError, phoneNumber: '' }))
+                }}
+                onBlur={() => validate('phoneNumber')}
+                errorMessage={error.phoneNumber}
+                type={'tel'}
+                max
+              />
+              <InputField
+                placeholder="Expected due date"
+                value={inputs.dueDate}
+                onChangeText={(value) => {
+                  setInputs({ ...inputs, dueDate: value })
+                  setError((prevError) => ({ ...prevError, dueDate: '' }))
+                }}
+                errorMessage={error.dueDate}
+              />
+            </View>
+            <View>
+              <Text
+                style={{
+                  fontFamily: 'nunito-medium',
+                  marginBottom: 20,
+                  marginHorizontal: 3,
+                }}
+              >
+                By setting up the account you agree to share your data with the
+                Hospital
+              </Text>
+            </View>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton onPress={handleSignUp} text="Register" />
+            </View>
+          </ScrollView>
+        </GestureHandlerRootView>
+      </KeyboardAvoidingView>
+    </>
   )
 }
 
@@ -169,23 +271,21 @@ export default SignUpScreen
 const styles = StyleSheet.create({
   titleContainer: {
     width: '100%',
-    backgroundColor:'white',
+    backgroundColor: 'white',
     // paddingLeft: 10
   },
   title: {
     fontSize: 36,
     fontFamily: 'nunito-bold',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   container: {
-    // padding: 20,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: 'white',
     height: '100%',
     paddingHorizontal: 0,
-    
   },
   inputContainer: {
     display: 'flex',
@@ -193,8 +293,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginHorizontal: 0,
-    paddingHorizontal:0,
-    backgroundColor: 'white'
+    paddingHorizontal: 0,
+    backgroundColor: 'white',
   },
   buttonContainer: {
     justifyContent: 'center',

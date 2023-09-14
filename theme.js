@@ -2,7 +2,7 @@ const theme = {
   primaryPink: '#9F678C',
   successGreen: '#1ED40E',
   warningYellow: '#EDBE17',
-  deepRed: '#7A0F1C',
+  error: 'red',
   descriptionGray: '#666666',
   titleBlack: '#000000',
   borderGray: '#E8E8E8',

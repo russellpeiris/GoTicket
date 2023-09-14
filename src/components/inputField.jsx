@@ -11,12 +11,13 @@ export const InputField = ({
   onFocus,
   leftIcon,
   rightIcon,
+  type
 }) => {
   const [isFocused, setIsFocused] = useState(false)
 
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
-    borderColor: isFocused ? theme.primaryPink : theme.borderGray,
+    borderColor: isFocused ? theme.primaryPink : errorMessage ? theme.error : theme.borderGray,
   }
   return (
     <Input
@@ -38,8 +39,10 @@ export const InputField = ({
       errorMessage={errorMessage}
       leftIcon={leftIcon}
       rightIcon={rightIcon}
-      leftIconContainerStyle={{ marginLeft: 20, marginRight: 15}}
-      rightIconContainerStyle={{ marginHorizontal: 20}}
+      inputMode={type}
+      maxLength={type === 'tel' ? 10 : null}
+      // leftIconContainerStyle={{ marginLeft: 20, marginRight: 15}}
+      // rightIconContainerStyle={{ }}
     />
   )
 }
