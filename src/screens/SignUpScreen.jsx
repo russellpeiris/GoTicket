@@ -1,7 +1,7 @@
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { useState } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../config/firebase'
+import { auth, db, doc, setDoc } from '../config/firebase'
 import { PrimaryButton, InputField } from '../components'
 import { Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
@@ -61,9 +61,39 @@ const SignUpScreen = () => {
       }))
       return
     }
+
+    if (!inputs.phoneNumber) {
+      setError((prevError) => ({
+        ...prevError,
+        phoneNumber: 'Phone Number is required',
+      }))
+      return
+    }
     setIsLoading(true)
     try {
-      await createUserWithEmailAndPassword(auth, inputs.email, inputs.password)
+      // Step 1: Create the user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        inputs.email,
+        inputs.password,
+      )
+      // Step 2: Store additional user data in Firestore
+      const { user } = userCredential
+      const userDocRef = doc(db, 'users', user.uid) 
+
+      const userData = {
+        firstName: inputs.firstName,
+        lastName: inputs.lastName,
+        email: inputs.email,
+        phoneNumber: inputs.phoneNumber,
+        dueDate: inputs.dueDate || '',
+      }
+      try{
+        const userDoc = await setDoc(userDocRef, userData)
+      }catch(error){
+        console.log('error: ', error);
+      }
+
     } catch (error) {
       error && setIsLoading(false)
       const errorCode = error.code
