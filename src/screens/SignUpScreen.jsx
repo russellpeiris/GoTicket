@@ -247,8 +247,7 @@ const SignUpScreen = () => {
                   setInputs({ ...inputs, password: value })
                   setError((prevError) => ({ ...prevError, password: '' }))
                 }}
-                secureTextEntry
-                rightIcon={{ type: 'font-awesome', name: 'eye', size: 18 }}
+                password={true}
                 errorMessage={error.password}
                 type={'text'}
               />

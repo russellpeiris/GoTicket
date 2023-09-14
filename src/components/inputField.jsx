@@ -10,39 +10,46 @@ export const InputField = ({
   onBlur,
   onFocus,
   leftIcon,
-  rightIcon,
-  type
+  password,
+  type,
 }) => {
-  const [isFocused, setIsFocused] = useState(false)
-
+  const [isFocused, setIsFocused] = useState(false);
+  const [hidePass, setHidePass] = useState(password);
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
-    borderColor: isFocused ? theme.primaryPink : errorMessage ? theme.error : theme.borderGray,
-  }
+    borderColor: isFocused
+      ? theme.primaryPink
+      : errorMessage
+      ? theme.error
+      : theme.borderGray,
+  };
   return (
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
       onFocus={() => {
-        if (onFocus) onFocus(); // Call onFocus if it's defined
+        if (onFocus) onFocus() // Call onFocus if it's defined
         setIsFocused(true)
       }}
       onBlur={() => {
-        if (onBlur) onBlur(); // Call onBlur if it's defined
+        if (onBlur) onBlur() // Call onBlur if it's defined
         setIsFocused(false)
       }}
       value={value}
       onChangeText={onChangeText}
       containerStyle={{ paddingHorizontal: 0 }}
       inputContainerStyle={inputContainerStyle}
-      secureTextEntry={placeholder === 'Password' ? true : false}
+      secureTextEntry={hidePass}
       errorMessage={errorMessage}
       leftIcon={leftIcon}
-      rightIcon={rightIcon}
       inputMode={type}
       maxLength={type === 'tel' ? 10 : null}
-      // leftIconContainerStyle={{ marginLeft: 20, marginRight: 15}}
-      // rightIconContainerStyle={{ }}
+      rightIcon={ password && {
+        type: 'font-awesome',
+        name: hidePass ? 'eye-slash' : 'eye',
+        size: 18,
+        onPress: () => setHidePass(!hidePass), // Toggle "showPassword" state
+      }}
     />
   )
 }

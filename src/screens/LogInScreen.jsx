@@ -1,15 +1,22 @@
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { useState } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
+import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
 import { PrimaryButton, InputField } from '../components'
 import { Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
+import Loader from '../components/loader'
+import {
+  ScrollView,
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler'
+import theme from '../../theme'
 const LogInScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState({ email: '', password: '' })
+  const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation()
   const handleSignUp = async () => {
     setError({ email: '', password: '' })
@@ -26,10 +33,11 @@ const LogInScreen = () => {
       }))
       return
     }
-
+    setIsLoading(true)
     try {
       await signInWithEmailAndPassword(auth, email, password)
     } catch (error) {
+      error && setIsLoading(false)
       const errorCode = error.code
       const errorMessage = error.message
 
@@ -54,7 +62,7 @@ const LogInScreen = () => {
     }
   }
 
-   validateEmail = () =>{
+  validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if (!email) {
@@ -73,60 +81,87 @@ const LogInScreen = () => {
       }
     })
     return unsubscribe
-  }, []) 
-  
+  }, [])
+
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="scroll">
-      <View>
-        <Text style={styles.title}>Login</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <InputField
-          placeholder="Email"
-          value={email}
-          onChangeText={(value) => {
-            setEmail(value)
-            setError((prevError) => ({ ...prevError, email: '' }))
-          }}
-          onBlur={validateEmail}
-          errorMessage={error.email}
-          leftIcon={{ type: 'font-awesome', name: 'envelope', size: 18 }}
-        />
-        <InputField
-          placeholder="Password"
-          value={password}
-          onChangeText={(value) => {
-            setPassword(value)
-            setError((prevError) => ({ ...prevError, password: '' }))
-          }}
-          secureTextEntry
-          errorMessage={error.password}
-          leftIcon={{ type: 'font-awesome', name: 'lock', size: 18 }}
-          rightIcon={{ type: 'font-awesome', name: 'eye', size: 18 }}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <PrimaryButton onPress={handleSignUp} text="Login" />
-      </View>
-      <View>
-        <Text onPress={() => navigation.replace('Register')}>Register</Text>
-      </View>
-    </KeyboardAvoidingView>
+    <>
+      <Loader visible={isLoading} /> 
+      <KeyboardAvoidingView style={styles.container} behavior="height">
+        <GestureHandlerRootView>
+          <ScrollView style={{ margin: 16 }}>
+            <View style={styles.inputContainer}>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>Login</Text>
+              </View>
+              <InputField
+                placeholder="Email"
+                value={email}
+                onChangeText={(value) => {
+                  setEmail(value)
+                  setError((prevError) => ({ ...prevError, email: '' }))
+                }}
+                onBlur={validateEmail}
+                errorMessage={error.email}
+              />
+              <InputField
+                placeholder="Password"
+                value={password}
+                onChangeText={(value) => {
+                  setPassword(value)
+                  setError((prevError) => ({ ...prevError, password: '' }))
+                }}
+                password={true}
+                errorMessage={error.password}
+                rightIcon={{ type: 'font-awesome', name: 'eye', size: 18 }}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <PrimaryButton onPress={handleSignUp} text="Login" />
+            </View>
+            <View>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  marginTop: 16,
+                  fontFamily: 'nunito-semi-bold',
+                  fontSize: 18,
+                }}
+              >
+                Don't have an account?
+                <Text
+                  onPress={() => navigation.replace('Register')}
+                  style={{
+                    color: theme.primaryPink,
+                    fontFamily: 'nunito-semi-bold',
+                  }}
+                >
+                  {' '}
+                  Register
+                </Text>
+              </Text>
+            </View>
+          </ScrollView>
+        </GestureHandlerRootView>
+      </KeyboardAvoidingView>
+    </>
   )
 }
-
 export default LogInScreen
 
 const styles = StyleSheet.create({
+  titleContainer:{
+    width: '100%',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingBottom: 32,
+  },
   title: {
-    fontSize: 46,
+    fontSize: 36,
     fontFamily: 'nunito-bold',
-    marginBottom: 40,
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
     height: '100%',
@@ -136,11 +171,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 0,
+    paddingHorizontal: 0,
+    backgroundColor: 'white',
   },
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 0,
-    width: '60%',
+    width: '100%',
   },
 })
