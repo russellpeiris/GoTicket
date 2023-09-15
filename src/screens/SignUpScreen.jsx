@@ -1,8 +1,14 @@
-import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native'
 import { useState } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db, doc, setDoc } from '../config/firebase'
-import { PrimaryButton, InputField, Loader} from '../components'
+import { PrimaryButton, InputField, Loader } from '../components'
 import { Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
@@ -11,7 +17,7 @@ import {
   GestureHandlerRootView,
   ScrollView,
 } from 'react-native-gesture-handler'
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from '@react-native-community/datetimepicker'
 const SignUpScreen = () => {
   const [inputs, setInputs] = useState({
     firstName: '',
@@ -28,27 +34,27 @@ const SignUpScreen = () => {
   const navigation = useNavigation()
 
   const toggleDatePicker = () => {
-    setIsVisible(!isVisible);
+    setIsVisible(!isVisible)
   }
-      
-  const handlePicker = (event, selectedDate) => {
-    if(event.type == "set"){
-      const currentDate = selectedDate;
-      setDate(currentDate);
 
-      if(Platform.OS === 'android'){
-        toggleDatePicker();
+  const handlePicker = (event, selectedDate) => {
+    if (event.type == 'set') {
+      const currentDate = selectedDate
+      setDate(currentDate)
+
+      if (Platform.OS === 'android') {
+        toggleDatePicker()
         setInputs({ ...inputs, dueDate: currentDate.toDateString() })
         setError((prevError) => ({ ...prevError, dueDate: '' }))
       }
-    }else{
+    } else {
       toggleDatePicker()
     }
-  };
-  
+  }
+
   const updateDueDate = (value) => {
-    setInputs({ ...inputs, dueDate: value });
-  };
+    setInputs({ ...inputs, dueDate: value })
+  }
 
   const handleSignUp = async () => {
     setError({
@@ -105,7 +111,7 @@ const SignUpScreen = () => {
       )
       // Step 2: Store additional user data in Firestore
       const { user } = userCredential
-      const userDocRef = doc(db, 'users', user.uid) 
+      const userDocRef = doc(db, 'users', user.uid)
 
       const userData = {
         firstName: inputs.firstName,
@@ -114,12 +120,11 @@ const SignUpScreen = () => {
         phoneNumber: inputs.phoneNumber,
         dueDate: inputs.dueDate || '',
       }
-      try{
+      try {
         const userDoc = await setDoc(userDocRef, userData)
-      }catch(error){
-        console.log('error: ', error);
+      } catch (error) {
+        console.log('error: ', error)
       }
-
     } catch (error) {
       error && setIsLoading(false)
       const errorCode = error.code
@@ -195,9 +200,6 @@ const SignUpScreen = () => {
     }
   }
 
-
-
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -237,7 +239,7 @@ const SignUpScreen = () => {
                   </Text>
                 </Text>
               </View>
-                <InputField
+              <InputField
                 placeholder="First Name"
                 value={inputs.firstName}
                 onChangeText={(value) => {
@@ -293,31 +295,25 @@ const SignUpScreen = () => {
                 type={'tel'}
                 max
               />
-                          {isVisible && (
-                    <>
-                      <DateTimePicker
-                        mode="date"
-                        display="spinner"
-                        value={date}
-                        onChange={handlePicker}
-    
-                      />
-                      {console.log(isVisible)}
-                    </>
-                  )}
-              <Pressable onPress={
-                toggleDatePicker
-              }>
-              <InputField
+              {isVisible && (
+                <>
+                  <DateTimePicker
+                    mode="date"
+                    display="spinner"
+                    value={date}
+                    onChange={handlePicker}
+                  />
+                </>
+              )}
+              <Pressable onPress={toggleDatePicker}>
+                <InputField
                   placeholder="Expected due date"
                   value={inputs.dueDate}
-                  onChangeText={
-                    (value) => {
-                    setInputs({ ...inputs, dueDate: value.toDateString()})
-                    // setDate(new Date(value))
-                    // setError((prevError) => ({ ...prevError, dueDate: '' }))
-                    }
-                }
+                  onChangeText={(value) => {
+                    setInputs({ ...inputs, dueDate: value.toDateString() })
+                    setDate(new Date(value))
+                    setError((prevError) => ({ ...prevError, dueDate: '' }))
+                  }}
                   editable={false}
                   errorMessage={error.dueDate}
                 />
