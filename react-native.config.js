@@ -4,4 +4,4 @@ module.exports = {
     android: {},
   },
   assets: ['./assets/fonts/Nunito-VariableFont_wght.ttf'],
-}
+};

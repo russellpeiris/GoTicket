@@ -1,7 +1,7 @@
-import { Input } from '@rneui/themed'
-import { StyleSheet } from 'react-native'
-import theme from '../../theme'
-import { useState } from 'react'
+import { StyleSheet } from 'react-native';
+import { Input } from '@rneui/themed';
+import { useState } from 'react';
+import theme from '../../theme';
 export const InputField = ({
   placeholder,
   value,
@@ -18,23 +18,19 @@ export const InputField = ({
   const [hidePass, setHidePass] = useState(password);
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
-    borderColor: isFocused
-      ? theme.primaryPink
-      : errorMessage
-      ? theme.error
-      : theme.borderGray,
+    borderColor: isFocused ? theme.primaryPink : errorMessage ? theme.error : theme.borderGray,
   };
   return (
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
       onFocus={() => {
-        if (onFocus) onFocus() // Call onFocus if it's defined
-        setIsFocused(true)
+        if (onFocus) onFocus(); // Call onFocus if it's defined
+        setIsFocused(true);
       }}
       onBlur={() => {
-        if (onBlur) onBlur() // Call onBlur if it's defined
-        setIsFocused(false)
+        if (onBlur) onBlur(); // Call onBlur if it's defined
+        setIsFocused(false);
       }}
       value={value}
       onChangeText={onChangeText}
@@ -46,15 +42,17 @@ export const InputField = ({
       leftIcon={leftIcon}
       inputMode={type}
       maxLength={type === 'tel' ? 10 : null}
-      rightIcon={ password && {
-        type: 'font-awesome',
-        name: hidePass ? 'eye-slash' : 'eye',
-        size: 18,
-        onPress: () => setHidePass(!hidePass), // Toggle "showPassword" state
-      }}
+      rightIcon={
+        password && {
+          type: 'font-awesome',
+          name: hidePass ? 'eye-slash' : 'eye',
+          size: 18,
+          onPress: () => setHidePass(!hidePass), // Toggle "showPassword" state
+        }
+      }
     />
-  )
-}
+  );
+};
 const styles = StyleSheet.create({
   inputStyle: {
     margin: 0,
@@ -72,4 +70,4 @@ const styles = StyleSheet.create({
     borderColor: theme.borderGray,
     paddingHorizontal: 20,
   },
-})
+});

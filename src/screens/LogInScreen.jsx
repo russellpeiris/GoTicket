@@ -1,90 +1,86 @@
-import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
-import { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../config/firebase'
-import { PrimaryButton, InputField, Loader } from '../components'
-import { Text } from '@rneui/themed'
-import { useNavigation } from '@react-navigation/native'
-import { useEffect } from 'react'
-import {
-  ScrollView,
-  GestureHandlerRootView,
-} from 'react-native-gesture-handler'
-import theme from '../../theme'
+import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import { PrimaryButton, InputField, Loader } from '../components';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { auth } from '../config/firebase';
+import { Text } from '@rneui/themed';
+import theme from '../../theme';
 const LogInScreen = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState({ email: '', password: '' })
-  const [isLoading, setIsLoading] = useState(false)
-  const navigation = useNavigation()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
   const handleSignUp = async () => {
-    setError({ email: '', password: '' })
+    setError({ email: '', password: '' });
 
     if (!email) {
-      setError((prevError) => ({ ...prevError, email: 'Email is required' }))
-      return
+      setError((prevError) => ({ ...prevError, email: 'Email is required' }));
+      return;
     }
 
     if (!password) {
       setError((prevError) => ({
         ...prevError,
         password: 'Password is required',
-      }))
-      return
+      }));
+      return;
     }
-    setIsLoading(true)
+    setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password)
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      error && setIsLoading(false)
-      const errorCode = error.code
-      const errorMessage = error.message
+      error && setIsLoading(false);
+      const errorCode = error.code;
+      const errorMessage = error.message;
 
       if (errorCode === 'auth/email-already-in-use') {
         setError((prevError) => ({
           ...prevError,
           email: 'Email is already in use. Please use a different email.',
-        }))
+        }));
       } else if (errorCode === 'auth/weak-password') {
         setError((prevError) => ({
           ...prevError,
           password: 'Weak password. Please use a stronger password.',
-        }))
+        }));
       } else if (errorCode === 'auth/invalid-email') {
         setError((prevError) => ({
           ...prevError,
           email: 'Please enter a valid email.',
-        }))
+        }));
       } else {
-        setError((prevError) => ({ ...prevError, email: errorMessage }))
+        setError((prevError) => ({ ...prevError, email: errorMessage }));
       }
     }
-  }
+  };
 
   validateEmail = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!email) {
-      setError((prevError) => ({ ...prevError, email: '' }))
+      setError((prevError) => ({ ...prevError, email: '' }));
     } else if (!emailRegex.test(email)) {
       setError((prevError) => ({
         ...prevError,
         email: 'Please enter a valid email.',
-      }))
+      }));
     }
-  }
+  };
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace('Home')
+        navigation.replace('Home');
       }
-    })
-    return unsubscribe
-  }, [])
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <>
-      <Loader visible={isLoading} /> 
+      <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
           <ScrollView style={{ margin: 16 }}>
@@ -96,8 +92,8 @@ const LogInScreen = () => {
                 placeholder="Email"
                 value={email}
                 onChangeText={(value) => {
-                  setEmail(value)
-                  setError((prevError) => ({ ...prevError, email: '' }))
+                  setEmail(value);
+                  setError((prevError) => ({ ...prevError, email: '' }));
                 }}
                 onBlur={validateEmail}
                 errorMessage={error.email}
@@ -106,8 +102,8 @@ const LogInScreen = () => {
                 placeholder="Password"
                 value={password}
                 onChangeText={(value) => {
-                  setPassword(value)
-                  setError((prevError) => ({ ...prevError, password: '' }))
+                  setPassword(value);
+                  setError((prevError) => ({ ...prevError, password: '' }));
                 }}
                 password={true}
                 errorMessage={error.password}
@@ -143,12 +139,12 @@ const LogInScreen = () => {
         </GestureHandlerRootView>
       </KeyboardAvoidingView>
     </>
-  )
-}
-export default LogInScreen
+  );
+};
+export default LogInScreen;
 
 const styles = StyleSheet.create({
-  titleContainer:{
+  titleContainer: {
     width: '100%',
     backgroundColor: 'white',
     alignItems: 'center',
@@ -180,4 +176,4 @@ const styles = StyleSheet.create({
     marginTop: 0,
     width: '100%',
   },
-})
+});

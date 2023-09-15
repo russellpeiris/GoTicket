@@ -1,23 +1,12 @@
-import {
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  StyleSheet,
-  View,
-} from 'react-native'
-import { useState } from 'react'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth, db, doc, setDoc } from '../config/firebase'
-import { PrimaryButton, InputField, Loader } from '../components'
-import { Text } from '@rneui/themed'
-import { useNavigation } from '@react-navigation/native'
-import { useEffect } from 'react'
-import theme from '../../theme'
-import {
-  GestureHandlerRootView,
-  ScrollView,
-} from 'react-native-gesture-handler'
-import DateTimePicker from '@react-native-community/datetimepicker'
+import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { PrimaryButton, InputField, Loader, DatePicker } from '../components';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db, doc, setDoc } from '../config/firebase';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
+import { Text } from '@rneui/themed';
+import theme from '../../theme';
 const SignUpScreen = () => {
   const [inputs, setInputs] = useState({
     firstName: '',
@@ -26,35 +15,31 @@ const SignUpScreen = () => {
     password: '',
     phoneNumber: '',
     dueDate: '',
-  })
-  const [date, setDate] = useState(new Date())
-  const [error, setError] = useState({ email: '', password: '' })
-  const [isLoading, setIsLoading] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const navigation = useNavigation()
+  });
+  const [date, setDate] = useState(new Date());
+  const [error, setError] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const navigation = useNavigation();
 
   const toggleDatePicker = () => {
-    setIsVisible(!isVisible)
-  }
+    setIsVisible(!isVisible);
+  };
 
   const handlePicker = (event, selectedDate) => {
     if (event.type == 'set') {
-      const currentDate = selectedDate
-      setDate(currentDate)
+      const currentDate = selectedDate;
+      setDate(currentDate);
 
       if (Platform.OS === 'android') {
-        toggleDatePicker()
-        setInputs({ ...inputs, dueDate: currentDate.toDateString() })
-        setError((prevError) => ({ ...prevError, dueDate: '' }))
+        toggleDatePicker();
+        setInputs({ ...inputs, dueDate: currentDate.toDateString() });
+        setError((prevError) => ({ ...prevError, dueDate: '' }));
       }
     } else {
-      toggleDatePicker()
+      toggleDatePicker();
     }
-  }
-
-  const updateDueDate = (value) => {
-    setInputs({ ...inputs, dueDate: value })
-  }
+  };
 
   const handleSignUp = async () => {
     setError({
@@ -64,54 +49,54 @@ const SignUpScreen = () => {
       password: '',
       phoneNumber: '',
       dueDate: '',
-    })
+    });
 
     if (!inputs.firstName) {
       setError((prevError) => ({
         ...prevError,
         firstName: 'First Name is required',
-      }))
-      return
+      }));
+      return;
     }
     if (!inputs.lastName) {
       setError((prevError) => ({
         ...prevError,
         lastName: 'Last Name is required',
-      }))
-      return
+      }));
+      return;
     }
 
     if (!inputs.email) {
-      setError((prevError) => ({ ...prevError, email: 'Email is required' }))
-      return
+      setError((prevError) => ({ ...prevError, email: 'Email is required' }));
+      return;
     }
 
     if (!inputs.password) {
       setError((prevError) => ({
         ...prevError,
         password: 'Password is required',
-      }))
-      return
+      }));
+      return;
     }
 
     if (!inputs.phoneNumber) {
       setError((prevError) => ({
         ...prevError,
         phoneNumber: 'Phone Number is required',
-      }))
-      return
+      }));
+      return;
     }
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       // Step 1: Create the user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         inputs.email,
-        inputs.password,
-      )
+        inputs.password
+      );
       // Step 2: Store additional user data in Firestore
-      const { user } = userCredential
-      const userDocRef = doc(db, 'users', user.uid)
+      const { user } = userCredential;
+      const userDocRef = doc(db, 'users', user.uid);
 
       const userData = {
         firstName: inputs.firstName,
@@ -119,95 +104,95 @@ const SignUpScreen = () => {
         email: inputs.email,
         phoneNumber: inputs.phoneNumber,
         dueDate: inputs.dueDate || '',
-      }
+      };
       try {
-        const userDoc = await setDoc(userDocRef, userData)
+        const userDoc = await setDoc(userDocRef, userData);
       } catch (error) {
-        console.log('error: ', error)
+        console.log('error: ', error);
       }
     } catch (error) {
-      error && setIsLoading(false)
-      const errorCode = error.code
-      const errorMessage = error.message
+      error && setIsLoading(false);
+      const errorCode = error.code;
+      const errorMessage = error.message;
 
       if (errorCode === 'auth/email-already-in-use') {
         setError((prevError) => ({
           ...prevError,
           email: 'Email is already in use. Please use a different email.',
-        }))
+        }));
       } else if (errorCode === 'auth/weak-password') {
         setError((prevError) => ({
           ...prevError,
           password: 'Weak password. Please use a stronger password.',
-        }))
+        }));
       } else if (errorCode === 'auth/invalid-email') {
         setError((prevError) => ({
           ...prevError,
           email: 'Please enter a valid email.',
-        }))
+        }));
       } else {
-        setError((prevError) => ({ ...prevError, email: errorMessage }))
+        setError((prevError) => ({ ...prevError, email: errorMessage }));
       }
     }
-  }
+  };
 
   const validate = (field) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const nameRegex = /^[A-Za-z\s\-']+$/
-    const phoneNumberRegex = /^\d{10}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const nameRegex = /^[A-Za-z\s\-']+$/;
+    const phoneNumberRegex = /^\d{10}$/;
 
     switch (field) {
       case 'email':
         if (!inputs.email) {
-          setError((prevError) => ({ ...prevError, email: '' }))
+          setError((prevError) => ({ ...prevError, email: '' }));
         } else if (!emailRegex.test(inputs.email)) {
           setError((prevError) => ({
             ...prevError,
             email: 'Please enter a valid email.',
-          }))
+          }));
         }
-        break
+        break;
       case 'firstName':
         if (!inputs.firstName) {
-          setError((prevError) => ({ ...prevError, firstName: '' }))
+          setError((prevError) => ({ ...prevError, firstName: '' }));
         } else if (!nameRegex.test(inputs.firstName)) {
           setError((prevError) => ({
             ...prevError,
             firstName: 'Name can only contain alphabetic characters',
-          }))
+          }));
         }
-        break
+        break;
       case 'lastName':
         if (!inputs.lastName) {
-          setError((prevError) => ({ ...prevError, lastName: '' }))
+          setError((prevError) => ({ ...prevError, lastName: '' }));
         } else if (!nameRegex.test(inputs.lastName)) {
           setError((prevError) => ({
             ...prevError,
             lastName: 'Name can only contain alphabetic characters',
-          }))
+          }));
         }
-        break
+        break;
       case 'phoneNumber':
         if (!inputs.phoneNumber) {
-          setError((prevError) => ({ ...prevError, phoneNumber: '' }))
+          setError((prevError) => ({ ...prevError, phoneNumber: '' }));
         } else if (!phoneNumberRegex.test(inputs.phoneNumber)) {
           setError((prevError) => ({
             ...prevError,
             phoneNumber: 'Please enter a valid phone number',
-          }))
+          }));
         }
-        break
+        break;
     }
-  }
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace('Home')
+        navigation.replace('Home');
       }
-    })
-    return unsubscribe
-  }, [])
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <>
@@ -243,8 +228,8 @@ const SignUpScreen = () => {
                 placeholder="First Name"
                 value={inputs.firstName}
                 onChangeText={(value) => {
-                  setInputs({ ...inputs, firstName: value })
-                  setError((prevError) => ({ ...prevError, firstName: '' }))
+                  setInputs({ ...inputs, firstName: value });
+                  setError((prevError) => ({ ...prevError, firstName: '' }));
                 }}
                 onBlur={() => validate('firstName')}
                 errorMessage={error.firstName}
@@ -254,8 +239,8 @@ const SignUpScreen = () => {
                 placeholder="Last Name"
                 value={inputs.lastName}
                 onChangeText={(value) => {
-                  setInputs({ ...inputs, lastName: value })
-                  setError((prevError) => ({ ...prevError, lastName: '' }))
+                  setInputs({ ...inputs, lastName: value });
+                  setError((prevError) => ({ ...prevError, lastName: '' }));
                 }}
                 onBlur={() => validate('lastName')}
                 errorMessage={error.lastName}
@@ -265,8 +250,8 @@ const SignUpScreen = () => {
                 placeholder="Email"
                 value={inputs.email}
                 onChangeText={(value) => {
-                  setInputs({ ...inputs, email: value })
-                  setError((prevError) => ({ ...prevError, email: '' }))
+                  setInputs({ ...inputs, email: value });
+                  setError((prevError) => ({ ...prevError, email: '' }));
                 }}
                 onBlur={() => validate('email')}
                 errorMessage={error.email}
@@ -276,8 +261,8 @@ const SignUpScreen = () => {
                 placeholder="Password"
                 value={inputs.password}
                 onChangeText={(value) => {
-                  setInputs({ ...inputs, password: value })
-                  setError((prevError) => ({ ...prevError, password: '' }))
+                  setInputs({ ...inputs, password: value });
+                  setError((prevError) => ({ ...prevError, password: '' }));
                 }}
                 password={true}
                 errorMessage={error.password}
@@ -287,8 +272,8 @@ const SignUpScreen = () => {
                 placeholder="Phone Number"
                 value={inputs.phoneNumber}
                 onChangeText={(value) => {
-                  setInputs({ ...inputs, phoneNumber: value })
-                  setError((prevError) => ({ ...prevError, phoneNumber: '' }))
+                  setInputs({ ...inputs, phoneNumber: value });
+                  setError((prevError) => ({ ...prevError, phoneNumber: '' }));
                 }}
                 onBlur={() => validate('phoneNumber')}
                 errorMessage={error.phoneNumber}
@@ -296,23 +281,16 @@ const SignUpScreen = () => {
                 max
               />
               {isVisible && (
-                <>
-                  <DateTimePicker
-                    mode="date"
-                    display="spinner"
-                    value={date}
-                    onChange={handlePicker}
-                  />
-                </>
+                <DatePicker mode="date" display="spinner" value={date} onChange={handlePicker} />
               )}
               <Pressable onPress={toggleDatePicker}>
                 <InputField
                   placeholder="Expected due date"
                   value={inputs.dueDate}
                   onChangeText={(value) => {
-                    setInputs({ ...inputs, dueDate: value.toDateString() })
-                    setDate(new Date(value))
-                    setError((prevError) => ({ ...prevError, dueDate: '' }))
+                    setInputs({ ...inputs, dueDate: value.toDateString() });
+                    setDate(new Date(value));
+                    setError((prevError) => ({ ...prevError, dueDate: '' }));
                   }}
                   editable={false}
                   errorMessage={error.dueDate}
@@ -327,8 +305,7 @@ const SignUpScreen = () => {
                   marginHorizontal: 3,
                 }}
               >
-                By setting up the account you agree to share your data with the
-                Hospital
+                By setting up the account you agree to share your data with the Hospital
               </Text>
             </View>
             <View style={styles.buttonContainer}>
@@ -338,10 +315,10 @@ const SignUpScreen = () => {
         </GestureHandlerRootView>
       </KeyboardAvoidingView>
     </>
-  )
-}
+  );
+};
 
-export default SignUpScreen
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   titleContainer: {
@@ -377,4 +354,4 @@ const styles = StyleSheet.create({
     marginTop: 0,
     width: '100%',
   },
-})
+});

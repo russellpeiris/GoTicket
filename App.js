@@ -1,13 +1,13 @@
-import React, {useEffect, useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer } from '@react-navigation/native';
 import SignUpScreen from './src/screens/SignUpScreen';
+import React, { useEffect, useCallback } from 'react';
 import LogInScreen from './src/screens/LogInScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {useFonts} from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import HomeScreen from './src/screens/HomeScreen';
+import { StyleSheet, View } from 'react-native';
+import { useFonts } from 'expo-font';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,21 +32,9 @@ export default function App() {
     <SafeAreaProvider onLayout={handleOnLayout}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            options={{headerShown: false}}
-            name="Register"
-            component={SignUpScreen}
-          />
-          <Stack.Screen
-            options={{headerShown: false}}
-            name="Login"
-            component={LogInScreen}
-          />
-          <Stack.Screen
-            options={{headerShown: true}}
-            name="Home"
-            component={HomeScreen}
-          />
+          <Stack.Screen options={{ headerShown: false }} name="Register" component={SignUpScreen} />
+          <Stack.Screen options={{ headerShown: false }} name="Login" component={LogInScreen} />
+          <Stack.Screen options={{ headerShown: true }} name="Home" component={HomeScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>

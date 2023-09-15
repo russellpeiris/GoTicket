@@ -1,10 +1,10 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
-import {Button} from '@rneui/themed';
-import theme from '../../theme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-export const PrimaryButton = ({text, onPress, width, height}) => {
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
+import { Button } from '@rneui/themed';
+import theme from '../../theme';
+import React from 'react';
+export const PrimaryButton = ({ text, onPress, width, height }) => {
   const buttonStyles = {
     backgroundColor: theme.primaryPink,
     borderWidth: 0,
@@ -14,15 +14,15 @@ export const PrimaryButton = ({text, onPress, width, height}) => {
     borderRadius: 8,
   };
   return (
-    <GestureHandlerRootView style={{width: '100%'}}>
-    <Button
-      TouchableComponent={TouchableOpacity}
-      onPress={onPress}
-      containerStyle={{}}
-      buttonStyle={buttonStyles}
-      titleStyle={styles.textStyles}
-      title={text}
-    />
+    <GestureHandlerRootView style={{ width: '100%' }}>
+      <Button
+        TouchableComponent={TouchableOpacity}
+        onPress={onPress}
+        containerStyle={{}}
+        buttonStyle={buttonStyles}
+        titleStyle={styles.textStyles}
+        title={text}
+      />
     </GestureHandlerRootView>
   );
 };
@@ -30,6 +30,6 @@ const styles = StyleSheet.create({
   textStyles: {
     color: '#ffffff',
     fontFamily: 'nunito-bold',
-    fontSize: 18
+    fontSize: 18,
   },
 });
