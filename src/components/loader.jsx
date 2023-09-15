@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import theme from '../../theme';
-const Loader = ({visible = false}) => {
+export const Loader = ({visible = false}) => {
   return (
     visible && (
       <View style={style.container}>
@@ -39,5 +39,3 @@ const style = StyleSheet.create({
     width: '100%',
   },
 });
-
-export default Loader;

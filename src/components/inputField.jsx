@@ -11,6 +11,7 @@ export const InputField = ({
   onFocus,
   leftIcon,
   password,
+  editable,
   type,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -41,6 +42,7 @@ export const InputField = ({
       inputContainerStyle={inputContainerStyle}
       secureTextEntry={hidePass}
       errorMessage={errorMessage}
+      editable={editable}
       leftIcon={leftIcon}
       inputMode={type}
       maxLength={type === 'tel' ? 10 : null}

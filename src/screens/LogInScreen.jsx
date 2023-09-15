@@ -2,11 +2,10 @@ import { KeyboardAvoidingView, StyleSheet, View } from 'react-native'
 import { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase'
-import { PrimaryButton, InputField } from '../components'
+import { PrimaryButton, InputField, Loader } from '../components'
 import { Text } from '@rneui/themed'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
-import Loader from '../components/loader'
 import {
   ScrollView,
   GestureHandlerRootView,
