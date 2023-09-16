@@ -1,13 +1,13 @@
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
-import { PrimaryButton, InputField, Loader } from '../components';
+import { PrimaryButton, InputField, Loader } from '../../components';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
-import { auth } from '../config/firebase';
+import { auth } from '../../config/firebase';
 import { Text } from '@rneui/themed';
-import theme from '../../theme';
-const LogInScreen = () => {
+import theme from '../../../theme';
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({ email: '', password: '' });
@@ -141,7 +141,7 @@ const LogInScreen = () => {
     </>
   );
 };
-export default LogInScreen;
+export default Login;
 
 const styles = StyleSheet.create({
   titleContainer: {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '../components';
 import { auth } from '../config/firebase';
 import React from 'react';
-const HomeScreen = () => {
+const Home = () => {
   const navigation = useNavigation();
   const handleSignOut = () => {
     auth
@@ -20,6 +20,6 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Home;
 
 const styles = StyleSheet.create({});

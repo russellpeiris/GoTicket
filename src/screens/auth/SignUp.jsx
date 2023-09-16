@@ -1,13 +1,13 @@
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { PrimaryButton, InputField, Loader, DatePicker } from '../components';
+import { PrimaryButton, InputField, Loader, DatePicker } from '../../components';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db, doc, setDoc } from '../config/firebase';
+import { auth, db, doc, setDoc } from '../../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
-import theme from '../../theme';
-const SignUpScreen = () => {
+import theme from '../../../theme';
+const SignUp = () => {
   const [inputs, setInputs] = useState({
     firstName: '',
     lastName: '',
@@ -318,10 +318,11 @@ const SignUpScreen = () => {
   );
 };
 
-export default SignUpScreen;
+export default SignUp;
 
 const styles = StyleSheet.create({
   titleContainer: {
+    // marginTop: 20,
     width: '100%',
     backgroundColor: 'white',
     // paddingLeft: 10
