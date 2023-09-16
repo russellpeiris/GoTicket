@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '../components';
 import { auth } from '../config/firebase';
 import React from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const Home = () => {
   const navigation = useNavigation();
   const handleSignOut = () => {
@@ -14,9 +15,9 @@ const Home = () => {
       .catch((error) => alert(error.message));
   };
   return (
-    <View>
+    <SafeAreaView>
       <PrimaryButton text="Logout" onPress={handleSignOut} />
-    </View>
+    </SafeAreaView>
   );
 };
 

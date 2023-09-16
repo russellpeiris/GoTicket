@@ -9,6 +9,7 @@ const theme = {
   infoNavy: '#363853',
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
+  inactiveGray: '#686868',
 };
 
 export default theme;

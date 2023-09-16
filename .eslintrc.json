@@ -1,10 +1,10 @@
 {
   "root": true,
-  "parser": "babel-eslint",
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"  // Change "common" to "module"
+    "ecmaVersion": 2021, // Update to a more recent ECMAScript version
+    "sourceType": "module"
   },
+  "requireConfigFile": false, // Disable Babel config file checking
   "plugins": ["react", "react-native", "prettier"],
   "extends": [
     "eslint:recommended",
@@ -17,7 +17,7 @@
   },
   "settings": {
     "react": {
-      "version": "latest"
+      "version": "detect" // Use automatic React version detection
     }
   }
 }

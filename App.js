@@ -10,10 +10,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [isLoaded] = useFonts({
-    'nunito-medium': require('./assets/fonts/Nunito-Medium.ttf'), // 'Nunito-Medium
-    'nunito-regular': require('./assets/fonts/Nunito-Regular.ttf'),
-    'nunito-semi-bold': require('./assets/fonts/Nunito-SemiBold.ttf'),
-    'nunito-bold': require('./assets/fonts/Nunito-Bold.ttf'),
+    'nunito-medium': require('./src/assets/fonts/Nunito-Medium.ttf'), // 'Nunito-Medium
+    'nunito-regular': require('./src/assets/fonts/Nunito-Regular.ttf'),
+    'nunito-semi-bold': require('./src/assets/fonts/Nunito-SemiBold.ttf'),
+    'nunito-bold': require('./src/assets/fonts/Nunito-Bold.ttf'),
   });
   const handleOnLayout = useCallback(async () => {
     if (isLoaded) {

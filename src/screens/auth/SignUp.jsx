@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
 import theme from '../../../theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const SignUp = () => {
   const [inputs, setInputs] = useState({
     firstName: '',
@@ -199,7 +200,7 @@ const SignUp = () => {
       <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
-          <ScrollView style={{ margin: 16 }}>
+          <ScrollView style={{ padding: 16 }}>
             <View style={styles.inputContainer}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Register</Text>
