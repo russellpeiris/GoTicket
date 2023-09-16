@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { Home, Menu } from '../screens';
-import UserProfile from '../screens/UserProfile';
+import { StyleSheet } from 'react-native';
+import { Doctors, Home, Menu, UserProfile } from '../screens';
+import React from 'react';
 
 const Tab = createBottomTabNavigator();
 const BottomNavigation = () => {
@@ -11,22 +10,14 @@ const BottomNavigation = () => {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen
-      name='Dashboard'
-      component={Home}
-      />
-      <Tab.Screen
-      name='Profile'
-      component={UserProfile}
-      />
-      <Tab.Screen
-      name='Menu'
-      component={Menu}
-      />
+      <Tab.Screen name="Dashboard" component={Home} />
+      <Tab.Screen name="Profile" component={UserProfile} />
+      <Tab.Screen name="Menu" component={Menu} />
+      <Tab.Screen name= "Doctors" component={Doctors} />
     </Tab.Navigator>
-  )
-}
+  );
+};
 
-export default BottomNavigation
+export default BottomNavigation;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
