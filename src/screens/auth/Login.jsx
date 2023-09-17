@@ -1,4 +1,5 @@
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { getErrorMessage } from '../../utils/errorMessages';
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
 import { PrimaryButton, InputField, Loader } from '../../components';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -34,26 +35,13 @@ const Login = () => {
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
-      const errorMessage = error.message;
+      const errorMessages = getErrorMessage(errorCode);
 
-      if (errorCode === 'auth/email-already-in-use') {
-        setError((prevError) => ({
-          ...prevError,
-          email: 'Email is already in use. Please use a different email.',
-        }));
-      } else if (errorCode === 'auth/weak-password') {
-        setError((prevError) => ({
-          ...prevError,
-          password: 'Weak password. Please use a stronger password.',
-        }));
-      } else if (errorCode === 'auth/invalid-email') {
-        setError((prevError) => ({
-          ...prevError,
-          email: 'Please enter a valid email.',
-        }));
-      } else {
-        setError((prevError) => ({ ...prevError, email: errorMessage }));
-      }
+      setError((prevError) => ({
+        ...prevError,
+        email: errorMessages.email,
+        password: errorMessages.password,
+      }));
     }
   };
 

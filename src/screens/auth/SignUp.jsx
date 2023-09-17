@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
 import theme from '../../../theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { getErrorMessage } from '../../utils/errorMessages';
+
 const SignUp = () => {
   const [inputs, setInputs] = useState({
     firstName: '',
@@ -114,26 +115,13 @@ const SignUp = () => {
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
-      const errorMessage = error.message;
+      const errorMessages = getErrorMessage(errorCode);
 
-      if (errorCode === 'auth/email-already-in-use') {
-        setError((prevError) => ({
-          ...prevError,
-          email: 'Email is already in use. Please use a different email.',
-        }));
-      } else if (errorCode === 'auth/weak-password') {
-        setError((prevError) => ({
-          ...prevError,
-          password: 'Weak password. Please use a stronger password.',
-        }));
-      } else if (errorCode === 'auth/invalid-email') {
-        setError((prevError) => ({
-          ...prevError,
-          email: 'Please enter a valid email.',
-        }));
-      } else {
-        setError((prevError) => ({ ...prevError, email: errorMessage }));
-      }
+      setError((prevError) => ({
+        ...prevError,
+        email: errorMessages.email,
+        password: errorMessages.password,
+      }));
     }
   };
 
