@@ -44,7 +44,7 @@ const UserProfile = () => {
               <DescInputField
                 label="Medical history"
                 placeholder="Add your medial history here..."
-                height={100}
+                height={180}
                 multiline={true}
                 textAlignVertical={'top'}
               />
@@ -61,9 +61,10 @@ export default UserProfile;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    flex: 1,
     backgroundColor: 'white',
-    height: '100%',
+    height: '100%',  
+    paddingBottom: 63,
   },
   formContainer: {
     margin: 16,

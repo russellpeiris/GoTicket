@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SignUp, Login, Home } from '../screens';
-import { StyleSheet } from 'react-native';
 import React from 'react';
 import BottomNavigation from './BottomNavigation';
 
@@ -16,5 +15,3 @@ const AuthNavigator = () => {
 };
 
 export default AuthNavigator;
-
-const styles = StyleSheet.create({});

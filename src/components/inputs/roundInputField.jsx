@@ -28,7 +28,7 @@ export const RoundInputField = ({
   }
   return (
     <View style={container}>
-      <Text style={{ fontSize: 12, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
+      <Text style={{ fontSize: 16, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
       <Input
         inputStyle={styles.inputStyle}
         placeholder={placeholder}
@@ -66,15 +66,17 @@ const styles = StyleSheet.create({
   inputStyle: {
     margin: 0,
     color: 'black',
-    fontSize: 12,
+    fontSize: 14,
     paddingHorizontal: 0,
   },
   inputContainerStyle: {
     margin: 0,
     borderRadius: 24,
+    fontSize:14,
     borderWidth: 1,
-    height: 36,
+    height: 50,
     borderColor: theme.borderGray,
     paddingHorizontal: 20,
+    paddingVertical: 10
   },
 });

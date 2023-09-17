@@ -29,11 +29,11 @@ const BottomNavigation = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true,
         tabBarInactiveTintColor: theme.inactiveGray,
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: theme.primaryPink,
         tabBarIcon: ({ color, size, focused }) =>
-          // Here, use your custom icon component HomeIcon
           getTabBarIcon(route, focused, color),
       })}
     >
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     paddingTop: 6,
     bottom: 0,
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1,
-    // },
-    // shadowOpacity: 100,
-    // shadowRadius: 2,
-    // elevation: 3,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 100,
+    shadowRadius: 2,
+    elevation: 8,
     // shadowColor: '#000', shadowOffset: { width: 0, height: 0.4 }, shadowOpacity: 0.5
   },
 });

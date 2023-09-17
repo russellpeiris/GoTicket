@@ -28,7 +28,7 @@ export const DescInputField = ({
 
   return (
     <View style={{width: '100%'}}>
-      <Text style={{ fontSize: 12, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
+      <Text style={{ fontSize: 16, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     margin: 0,
     color: 'black',
     paddingHorizontal: 0,
-    fontSize: 12,
+    fontSize: 14,
     height: '100%',
   },
   inputContainerStyle: {
     width: '100%',
     margin: 0,
     borderRadius: 8,
-    fontSize: 12,
+    fontSize: 14,
     borderWidth: 1,
     maxWidth: '100%',
     borderColor: theme.borderGray,

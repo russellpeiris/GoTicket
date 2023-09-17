@@ -25,7 +25,6 @@ export const InputField = ({
 
   return (
     <View style={{width: '100%'}}>
-      <Text style={{ fontSize: 12, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
@@ -75,6 +74,6 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     borderColor: theme.borderGray,
     paddingHorizontal: 20,
-    paddingVertical: 10
+    paddingVertical: 10,
   },
 });

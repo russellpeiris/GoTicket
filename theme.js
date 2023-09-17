@@ -10,7 +10,7 @@ const theme = {
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
   inactiveGray: '#686868',
-  subTitle: 16,
+  subTitle: 20,
   titleBar: 18,
   bold: 'nunito-bold',
   semiBold: 'nunito-semi-bold',
