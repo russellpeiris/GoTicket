@@ -1,26 +1,28 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
-import { PrimaryButton } from '../components';
-import { auth } from '../config/firebase';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 const Home = () => {
   const navigation = useNavigation();
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace('Login');
-      })
-      .catch((error) => alert(error.message));
-  };
+
   return (
     <SafeAreaView>
-      <PrimaryButton text="Logout" onPress={handleSignOut} />
+      <GestureHandlerRootView style={styles.container}>
+      <ScrollView >
+      <Text>Dashboard</Text>
+      </ScrollView>
+      </GestureHandlerRootView>
     </SafeAreaView>
   );
 };
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    backgroundColor: 'white',
+    height: '100%',
+  }
+});

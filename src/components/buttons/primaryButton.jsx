@@ -2,7 +2,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import { Button } from '@rneui/themed';
-import theme from '../../theme';
+import theme from '../../../theme';
 import React from 'react';
 export const PrimaryButton = ({ text, onPress, width, height }) => {
   const buttonStyles = {

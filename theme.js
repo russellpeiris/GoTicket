@@ -10,6 +10,12 @@ const theme = {
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
   inactiveGray: '#686868',
+  subTitle: 16,
+  titleBar: 18,
+  bold: 'nunito-bold',
+  semiBold: 'nunito-semi-bold',
+  medium: 'nunito-medium',
+  regular: 'nunito-regular',
 };
 
 export default theme;

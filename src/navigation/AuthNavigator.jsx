@@ -11,7 +11,6 @@ const AuthNavigator = () => {
       <Stack.Screen options={{ headerShown: false }} name="Register" component={SignUp} />
       <Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
       <Stack.Screen options={{ headerShown: false }} name="Home" component={BottomNavigation} />
-      {/* <Stack.Screen options={{headerShown: false }} name="UserProfile" component={BottomNavigation}/> */}
     </Stack.Navigator>
   );
 };

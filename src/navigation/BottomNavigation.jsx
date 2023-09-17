@@ -3,6 +3,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Doctors, Home, Menu, UserProfile } from '../screens';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Platform } from 'react-native';
+import { BackArrow } from '../components';
+import { Button } from '@rneui/base';
 import theme from '../../theme';
 import React from 'react';
 
@@ -36,9 +38,30 @@ const BottomNavigation = () => {
       })}
     >
       <Tab.Screen name="Dashboard" component={Home} />
-      <Tab.Screen name="Profile" component={UserProfile} />
-      <Tab.Screen name="Doctors" component={Doctors} />
-      <Tab.Screen name="Menu" component={Menu} />
+      <Tab.Screen
+        name="Profile"
+        component={UserProfile}
+        options={({ navigation, route }) => ({
+          headerShown: true,
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+      <Tab.Screen
+        name="Doctors"
+        component={Doctors}
+        options={({ navigation, route }) => ({
+          headerShown: true,
+          headerLeft: () => <BackArrow />,
+        })}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={Menu}
+        options={({ navigation, route }) => ({
+          headerShown: true,
+          headerLeft: () => <BackArrow />,
+        })}
+      />
     </Tab.Navigator>
   );
 };
@@ -55,14 +78,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    bottom: 0, 
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 100,
-    shadowRadius: 2,
-    elevation: 3,
-    // shadowColor: '#000', shadowOffset: { width: 0, height: 0.4 }, shadowOpacity: 0.5 
+    paddingTop: 6,
+    bottom: 0,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 100,
+    // shadowRadius: 2,
+    // elevation: 3,
+    // shadowColor: '#000', shadowOffset: { width: 0, height: 0.4 }, shadowOpacity: 0.5
   },
 });

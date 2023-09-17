@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { Input } from '@rneui/themed';
+import { StyleSheet, View } from 'react-native';
+import { Input, Text } from '@rneui/themed';
 import { useState } from 'react';
-import theme from '../../theme';
+import theme from '../../../theme';
 export const InputField = ({
   placeholder,
   value,
@@ -13,14 +13,19 @@ export const InputField = ({
   password,
   editable,
   type,
+  label
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hidePass, setHidePass] = useState(password);
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
     borderColor: isFocused ? theme.primaryPink : errorMessage ? theme.error : theme.borderGray,
+    height: 65,
   };
+
   return (
+    <View style={{width: '100%'}}>
+      <Text style={{ fontSize: 12, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
@@ -29,7 +34,7 @@ export const InputField = ({
         setIsFocused(true);
       }}
       onBlur={() => {
-        if (onBlur) onBlur(); // Call onBlur if it's defined
+        if (onBlur) onBlur(); 
         setIsFocused(false);
       }}
       value={value}
@@ -47,27 +52,29 @@ export const InputField = ({
           type: 'font-awesome',
           name: hidePass ? 'eye-slash' : 'eye',
           size: 18,
-          onPress: () => setHidePass(!hidePass), // Toggle "showPassword" state
+          onPress: () => setHidePass(!hidePass),
         }
       }
     />
+    </View>
   );
 };
 const styles = StyleSheet.create({
   inputStyle: {
     margin: 0,
     color: 'black',
-    fontSize: 16,
     paddingHorizontal: 0,
+    fontFamily: theme.regular,
+    height: '100%'
   },
   inputContainerStyle: {
+    width: '100%',
     margin: 0,
     borderRadius: 8,
     borderWidth: 1,
-    height: 65,
-    width: '100%',
     maxWidth: '100%',
     borderColor: theme.borderGray,
     paddingHorizontal: 20,
+    paddingVertical: 10
   },
 });
