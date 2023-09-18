@@ -2,11 +2,11 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { StyleSheet } from 'react-native';
 import { Button } from '@rneui/themed';
-import theme from '../../../theme';
+import { colors, typography } from '../../../theme';
 import React from 'react';
 export const PrimaryButton = ({ text, onPress, width, height }) => {
   const buttonStyles = {
-    backgroundColor: theme.primaryPink,
+    backgroundColor: colors.primaryPink,
     borderWidth: 0,
     color: 'black',
     width: width || '100%',
@@ -29,7 +29,7 @@ export const PrimaryButton = ({ text, onPress, width, height }) => {
 const styles = StyleSheet.create({
   textStyles: {
     color: '#ffffff',
-    fontFamily: 'nunito-bold',
+    fontFamily: typography.bold,
     fontSize: 18,
   },
 });

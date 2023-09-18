@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { auth } from '../../config/firebase';
 import { Text } from '@rneui/themed';
-import theme from '../../../theme';
+import { colors, typography } from '../../../theme';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -106,7 +106,7 @@ const Login = () => {
                 style={{
                   textAlign: 'center',
                   marginTop: 16,
-                  fontFamily: 'nunito-semi-bold',
+                  fontFamily: typography.semiBold,
                   fontSize: 18,
                 }}
               >
@@ -114,8 +114,8 @@ const Login = () => {
                 <Text
                   onPress={() => navigation.replace('Register')}
                   style={{
-                    color: theme.primaryPink,
-                    fontFamily: 'nunito-semi-bold',
+                    color: colors.primaryPink,
+                    fontFamily: typography.semiBold,
                   }}
                 >
                   {' '}
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 36,
-    fontFamily: 'nunito-bold',
+    fontFamily: typography.bold,
   },
   container: {
     display: 'flex',

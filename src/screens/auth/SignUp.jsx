@@ -6,7 +6,7 @@ import { auth, db, doc, setDoc } from '../../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
-import theme from '../../../theme';
+import { colors, typography } from '../../../theme';
 import { getErrorMessage } from '../../utils/errorMessages';
 
 const SignUp = () => {
@@ -194,7 +194,7 @@ const SignUp = () => {
                 <Text style={styles.title}>Register</Text>
                 <Text
                   style={{
-                    fontFamily: 'nunito-semi-bold',
+                    fontFamily: typography.semiBold,
                     fontSize: 18,
                     marginTop: 10,
                     marginBottom: 30,
@@ -204,8 +204,8 @@ const SignUp = () => {
                   <Text
                     onPress={() => navigation.replace('Login')}
                     style={{
-                      color: theme.primaryPink,
-                      fontFamily: 'nunito-semi-bold',
+                      color: colors.primaryPink,
+                      fontFamily: typography.semiBold,
                     }}
                   >
                     {' '}
@@ -289,7 +289,7 @@ const SignUp = () => {
             <View>
               <Text
                 style={{
-                  fontFamily: 'nunito-medium',
+                  fontFamily: typography.medium,
                   marginBottom: 20,
                   marginHorizontal: 3,
                 }}
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 36,
-    fontFamily: 'nunito-bold',
+    fontFamily: typography.bold,
     backgroundColor: 'white',
   },
   container: {

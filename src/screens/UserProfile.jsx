@@ -2,7 +2,7 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { DescInputField, PrimaryButton, RoundInputField } from '../components';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
-import theme from '../../theme';
+import {colors, typography} from '../../theme';
 import React from 'react';
 const UserProfile = () => {
   const navigation = useNavigation();
@@ -12,7 +12,7 @@ const UserProfile = () => {
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
           <View style={styles.formContainer}>
-            <Text style={{ fontSize: theme.subTitle, fontFamily: theme.semiBold }}>
+            <Text style={{ fontSize: typography.subTitle, fontFamily: typography.semiBold }}>
               Personal Information
             </Text>
             <View style={styles.inputsContainer}>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   formContainer: {
     margin: 16,
     padding: 16,
-    borderColor: theme.borderGray, // Use your theme variable or specify a color directly
+    borderColor: colors.borderGray, // Use your theme variable or specify a color directly
     borderWidth: 1,
     borderRadius: 10,
   },

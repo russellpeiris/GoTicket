@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Platform } from 'react-native';
 import { BackArrow } from '../components';
 import { Button } from '@rneui/base';
-import theme from '../../theme';
+import {colors, typography} from '../../theme';
 import React from 'react';
 
 const Tab = createBottomTabNavigator();
@@ -30,9 +30,9 @@ const BottomNavigation = () => {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
-        tabBarInactiveTintColor: theme.inactiveGray,
+        tabBarInactiveTintColor: colors.inactiveGray,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: theme.primaryPink,
+        tabBarActiveTintColor: colors.primaryPink,
         tabBarIcon: ({ color, size, focused }) =>
           getTabBarIcon(route, focused, color),
       })}

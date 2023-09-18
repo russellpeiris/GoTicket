@@ -1,4 +1,5 @@
-const theme = {
+// Colors
+export const colors = {
   primaryPink: '#9F678C',
   successGreen: '#1ED40E',
   warningYellow: '#EDBE17',
@@ -10,6 +11,10 @@ const theme = {
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
   inactiveGray: '#686868',
+};
+
+// Typography
+export const typography = {
   subTitle: 20,
   titleBar: 18,
   bold: 'nunito-bold',
@@ -17,5 +22,3 @@ const theme = {
   medium: 'nunito-medium',
   regular: 'nunito-regular',
 };
-
-export default theme;

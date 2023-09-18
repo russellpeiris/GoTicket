@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
 import { useState } from 'react';
-import theme from '../../../theme';
+import { colors, typography } from '../../../theme';
 export const DescInputField = ({
   placeholder,
   value,
@@ -22,13 +22,13 @@ export const DescInputField = ({
   const [hidePass, setHidePass] = useState(password);
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
-    borderColor: isFocused ? theme.primaryPink : errorMessage ? theme.error : theme.borderGray,
+    borderColor: isFocused ? colors.primaryPink : errorMessage ? colors.error : colors.borderGray,
     height: height ? height : 65,
   };
 
   return (
     <View style={{width: '100%'}}>
-      <Text style={{ fontSize: 16, fontFamily: theme.medium, marginBottom: 5 }}>{label}</Text>
+      <Text style={{ fontSize: 16, fontFamily: typography.medium, marginBottom: 5 }}>{label}</Text>
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     borderWidth: 1,
     maxWidth: '100%',
-    borderColor: theme.borderGray,
+    borderColor: colors.borderGray,
     paddingHorizontal: 20,
     paddingVertical: 10
   },

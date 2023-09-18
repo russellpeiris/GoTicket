@@ -1,12 +1,12 @@
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import theme from '../../theme';
+import { colors } from '../../theme';
 import React from 'react';
 export const Loader = ({ visible = false }) => {
   return (
     visible && (
       <View style={style.container}>
         <View style={style.loader}>
-          <ActivityIndicator size="large" color={theme.primaryPink} />
+          <ActivityIndicator size="large" color={colors.primaryPink} />
           <Text style={{ marginLeft: 10, fontSize: 16 }}>Loading...</Text>
         </View>
       </View>

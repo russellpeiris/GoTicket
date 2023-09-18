@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { Input, Text } from '@rneui/themed';
 import { useState } from 'react';
-import theme from '../../../theme';
+import { colors, typography } from '../../../theme';
 export const InputField = ({
   placeholder,
   value,
@@ -19,7 +19,7 @@ export const InputField = ({
   const [hidePass, setHidePass] = useState(password);
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
-    borderColor: isFocused ? theme.primaryPink : errorMessage ? theme.error : theme.borderGray,
+    borderColor: isFocused ? colors.primaryPink : errorMessage ? colors.error : colors.borderGray,
     height: 65,
   };
 
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     margin: 0,
     color: 'black',
     paddingHorizontal: 0,
-    fontFamily: theme.regular,
+    fontFamily: typography.regular,
     height: '100%'
   },
   inputContainerStyle: {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     maxWidth: '100%',
-    borderColor: theme.borderGray,
+    borderColor: colors.borderGray,
     paddingHorizontal: 20,
     paddingVertical: 10,
   },
