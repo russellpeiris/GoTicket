@@ -2,10 +2,9 @@ import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Doctors, Home, Menu, UserProfile } from '../screens';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { BackArrow } from '../components';
-import { Button } from '@rneui/base';
-import {colors, typography} from '../../theme';
+import {colors, dimen, typography} from '../../theme';
 import React from 'react';
 
 const Tab = createBottomTabNavigator();
@@ -14,13 +13,13 @@ const BottomNavigation = () => {
 
   const getTabBarIcon = (route, focused, color) => {
     if (route.name === 'Dashboard') {
-      return <HomeIcon width={24} height={24} fill={color} />;
+      return <HomeIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     } else if (route.name === 'Profile') {
-      return <AvatarIcon width={24} height={24} fill={color} />;
+      return <AvatarIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     } else if (route.name === 'Doctors') {
-      return <DoctorIcon width={24} height={24} fill={color} />;
+      return <DoctorIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     } else if (route.name === 'Menu') {
-      return <MenuIcon width={24} height={24} fill={color} />;
+      return <MenuIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     }
   };
 
@@ -42,6 +41,8 @@ const BottomNavigation = () => {
         name="Profile"
         component={UserProfile}
         options={({ navigation, route }) => ({
+          title: 'Profile',
+          headerTitleStyle: styles.headerTitleStyle,
           headerShown: true,
           headerLeft: () => <BackArrow />,
         })}
@@ -50,6 +51,8 @@ const BottomNavigation = () => {
         name="Doctors"
         component={Doctors}
         options={({ navigation, route }) => ({
+          title: 'Doctors',
+          headerTitleStyle: styles.headerTitleStyle,
           headerShown: true,
           headerLeft: () => <BackArrow />,
         })}
@@ -58,6 +61,8 @@ const BottomNavigation = () => {
         name="Menu"
         component={Menu}
         options={({ navigation, route }) => ({
+          title: 'Menu',
+          headerTitleStyle: styles.headerTitleStyle,
           headerShown: true,
           headerLeft: () => <BackArrow />,
         })}
@@ -89,4 +94,8 @@ const styles = StyleSheet.create({
     elevation: 8,
     // shadowColor: '#000', shadowOffset: { width: 0, height: 0.4 }, shadowOpacity: 0.5
   },
+  headerTitleStyle: {
+    fontFamily: typography.bold,
+    fontSize: typography.titleBar,
+  }
 });

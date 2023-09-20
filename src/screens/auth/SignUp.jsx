@@ -6,7 +6,7 @@ import { auth, db, doc, setDoc } from '../../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
-import { colors, typography } from '../../../theme';
+import { colors, dimen, typography } from '../../../theme';
 import { getErrorMessage } from '../../utils/errorMessages';
 
 const SignUp = () => {
@@ -188,14 +188,14 @@ const SignUp = () => {
       <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
-          <ScrollView style={{ padding: 16 }}>
+          <ScrollView style={{ padding: dimen.default }}>
             <View style={styles.inputContainer}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Register</Text>
                 <Text
                   style={{
                     fontFamily: typography.semiBold,
-                    fontSize: 18,
+                    fontSize: typography.authSubTitle,
                     marginTop: 10,
                     marginBottom: 30,
                   }}
@@ -292,6 +292,7 @@ const SignUp = () => {
                   fontFamily: typography.medium,
                   marginBottom: 20,
                   marginHorizontal: 3,
+                  fontSize: typography.default
                 }}
               >
                 By setting up the account you agree to share your data with the Hospital
@@ -311,23 +312,22 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   titleContainer: {
-    // marginTop: 20,
     width: '100%',
     backgroundColor: 'white',
-    // paddingLeft: 10
   },
   title: {
-    fontSize: 36,
+    fontSize: typography.authTitle,
     fontFamily: typography.bold,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     height: '100%',
     paddingHorizontal: 0,
+    paddingVertical: dimen.default,
   },
   inputContainer: {
     display: 'flex',

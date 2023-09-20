@@ -1,6 +1,6 @@
 import { Input, Text } from '@rneui/themed';
 import { StyleSheet, View } from 'react-native';
-import { colors, typography } from '../../../theme';
+import { colors, dimen, typography } from '../../../theme';
 import { useState } from 'react';
 export const RoundInputField = ({
   placeholder,
@@ -21,14 +21,13 @@ export const RoundInputField = ({
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
     borderColor: isFocused ? colors.primaryPink : errorMessage ? colors.error : colors.borderGray,
-    // width: width ? width : '100%',
   };
   const container = {
     width: width ? width : '100%',
   }
   return (
     <View style={container}>
-      <Text style={{ fontSize: 16, fontFamily: typography.medium, marginBottom: 5 }}>{label}</Text>
+      <Text style={{ fontSize: typography.default, fontFamily: typography.medium, marginBottom: 12 }}>{label}</Text>
       <Input
         inputStyle={styles.inputStyle}
         placeholder={placeholder}
@@ -66,13 +65,13 @@ const styles = StyleSheet.create({
   inputStyle: {
     margin: 0,
     color: 'black',
-    fontSize: 14,
+    fontSize: typography.small,
     paddingHorizontal: 0,
   },
   inputContainerStyle: {
     margin: 0,
-    borderRadius: 24,
-    fontSize:14,
+    borderRadius: dimen.inputBorderRadius,
+    fontSize:typography.small,
     borderWidth: 1,
     height: 50,
     borderColor: colors.borderGray,

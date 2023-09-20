@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { auth } from '../../config/firebase';
 import { Text } from '@rneui/themed';
-import { colors, typography } from '../../../theme';
+import { colors, dimen, typography } from '../../../theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,7 +32,9 @@ const Login = () => {
     }
     setIsLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const loggedUser = await signInWithEmailAndPassword(auth, email, password);
+      await AsyncStorage.setItem('userId', loggedUser.uid);
+
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
@@ -71,7 +74,7 @@ const Login = () => {
       <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
-          <ScrollView style={{ margin: 16 }}>
+          <ScrollView style={{ margin: dimen.default }}>
             <View style={styles.inputContainer}>
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>Login</Text>
@@ -105,9 +108,9 @@ const Login = () => {
               <Text
                 style={{
                   textAlign: 'center',
-                  marginTop: 16,
+                  marginTop: dimen.default,
                   fontFamily: typography.semiBold,
-                  fontSize: 18,
+                  fontSize: typography.authSubTitle,
                 }}
               >
                 Don't have an account?
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   title: {
-    fontSize: 36,
+    fontSize: typography.authTitle,
     fontFamily: typography.bold,
   },
   container: {
