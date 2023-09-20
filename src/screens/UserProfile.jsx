@@ -1,4 +1,4 @@
-import { DatePicker, DescInputField, PrimaryButton, RoundInputField } from '../components';
+import { DatePicker, DescInputField, Loader, PrimaryButton, RoundInputField } from '../components';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { auth, db, setDoc, doc } from '../config/firebase';
@@ -8,6 +8,7 @@ import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 const UserProfile = () => {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState({ DOB: false, dueDate: false });
   const [date, setDate] = useState({ DOB: new Date(), dueDate: new Date() });
 
@@ -69,6 +70,7 @@ const UserProfile = () => {
     }
   };
   const updateUser = async () => {
+    setIsLoading(true);
     try {
       const userId = auth.currentUser.uid; // Get the currently logged in user data
       const userRef = doc(db, 'users', userId);
@@ -77,7 +79,11 @@ const UserProfile = () => {
       await setDoc(userRef, userInfo, { merge: true });
       console.log('User data updated successfully');
     } catch (error) {
+      error && setIsLoading(false);
       console.error('Error updating user data:', error);
+    } finally {
+      setIsLoading(false);
+      navigation.goBack();
     }
   };
 
@@ -102,6 +108,7 @@ const UserProfile = () => {
   }, []);
   return (
     <>
+    <Loader visible={isLoading} />
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
           <View style={styles.formContainer}>
@@ -237,11 +244,11 @@ const UserProfile = () => {
               <View
                 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
               >
-                {isVisible.DOB && (
+                {isVisible.dueDate && (
                   <DatePicker
                     mode="date"
                     display="spinner"
-                    value={date.DOB}
+                    value={date.dueDate}
                     onChange={(event, selectedDate, type) => {
                       handlePicker(event, selectedDate, (type = 'dueDate'));
                     }}
