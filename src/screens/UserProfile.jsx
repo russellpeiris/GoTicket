@@ -4,14 +4,16 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { auth, db, setDoc, doc } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
+import { useLoader } from '../context/LoaderContext';
 import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 const UserProfile = () => {
   const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, setIsLoading } = useLoader(() => {
+    setIsLoading(true);
+  });
   const [isVisible, setIsVisible] = useState({ DOB: false, dueDate: false });
   const [date, setDate] = useState({ DOB: new Date(), dueDate: new Date() });
-
   const [error, setError] = useState({
     firstName: '',
     lastName: '',
@@ -88,6 +90,7 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const userId = auth.currentUser.uid; // Get the currently logged-in user's UID
     const userRef = doc(db, 'users', userId);
 
@@ -108,9 +111,9 @@ const UserProfile = () => {
 
     fetchUserData();
   }, []);
+
   return (
     <>
-    <Loader visible={isLoading} />
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
           <View style={styles.formContainer}>

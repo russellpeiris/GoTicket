@@ -3,11 +3,12 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import { PrimaryButton, InputField, Loader, DatePicker } from '../../components';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db, doc, setDoc } from '../../config/firebase';
+import { getErrorMessage } from '../../utils/errorMessages';
+import { colors, dimen, typography } from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
+import { useLoader } from '../../context/LoaderContext';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
-import { colors, dimen, typography } from '../../../theme';
-import { getErrorMessage } from '../../utils/errorMessages';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -20,7 +21,7 @@ const SignUp = () => {
   });
   const [date, setDate] = useState(new Date());
   const [error, setError] = useState({ email: '', password: '' });
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoader();
   const [isVisible, setIsVisible] = useState(false);
   const navigation = useNavigation();
 
@@ -185,7 +186,6 @@ const SignUp = () => {
 
   return (
     <>
-      <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
           <ScrollView style={{ padding: dimen.default }}>
@@ -292,7 +292,7 @@ const SignUp = () => {
                   fontFamily: typography.medium,
                   marginBottom: 20,
                   marginHorizontal: 3,
-                  fontSize: typography.default
+                  fontSize: typography.default,
                 }}
               >
                 By setting up the account you agree to share your data with the Hospital

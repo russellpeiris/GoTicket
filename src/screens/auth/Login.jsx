@@ -1,19 +1,20 @@
 import { ScrollView, GestureHandlerRootView } from 'react-native-gesture-handler';
-import { getErrorMessage } from '../../utils/errorMessages';
 import { KeyboardAvoidingView, StyleSheet, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PrimaryButton, InputField, Loader } from '../../components';
+import { getErrorMessage } from '../../utils/errorMessages';
+import { colors, dimen, typography } from '../../../theme';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useLoader } from '../../context/LoaderContext';
 import { auth } from '../../config/firebase';
+import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
-import { colors, dimen, typography } from '../../../theme';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState({ email: '', password: '' });
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, setIsLoading } = useLoader();
   const navigation = useNavigation();
   const handleSignUp = async () => {
     setError({ email: '', password: '' });
@@ -34,7 +35,6 @@ const Login = () => {
     try {
       const loggedUser = await signInWithEmailAndPassword(auth, email, password);
       await AsyncStorage.setItem('userId', loggedUser.uid);
-
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
@@ -71,7 +71,6 @@ const Login = () => {
 
   return (
     <>
-      <Loader visible={isLoading} />
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <GestureHandlerRootView>
           <ScrollView style={{ margin: dimen.default }}>

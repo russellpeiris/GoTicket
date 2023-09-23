@@ -1,10 +1,12 @@
+import { LoaderProvider, useLoader } from './src/context/LoaderContext';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
+import AuthNavigator from './src/navigation/AuthNavigator';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useCallback } from 'react';
+import { Loader } from './src/components';
 import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
-import AuthNavigator from './src/navigation/AuthNavigator';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -26,10 +28,18 @@ export default function App() {
   }
   return (
     <SafeAreaProvider onLayout={handleOnLayout}>
-      <NavigationContainer>
-        <AuthNavigator />
-      </NavigationContainer>
+      <LoaderProvider>
+        <AppContents />
+        <NavigationContainer>
+          <AuthNavigator />
+        </NavigationContainer>
+      </LoaderProvider>
     </SafeAreaProvider>
   );
 }
 
+function AppContents() {
+  const { isLoading } = useLoader();
+
+  return <Loader visible={isLoading} />;
+}
