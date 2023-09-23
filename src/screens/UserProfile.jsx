@@ -115,7 +115,7 @@ const UserProfile = () => {
   return (
     <>
       <GestureHandlerRootView style={styles.container}>
-        <ScrollView>
+        <ScrollView >
           <View style={styles.formContainer}>
             <Text
               style={{
@@ -324,7 +324,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     height: '100%',
-    paddingBottom: 63,
+    // paddingBottom: 63,
   },
   formContainer: {
     margin: dimen.default,

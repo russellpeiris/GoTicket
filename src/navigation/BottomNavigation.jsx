@@ -82,16 +82,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'absolute',
     paddingTop: 6,
     bottom: 0,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 100,
-    shadowRadius: 2,
-    elevation: 8,
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 1,
+    // },
+    // shadowOpacity: 100,
+    // shadowRadius: 2,
+    // elevation: 8,
     // shadowColor: '#000', shadowOffset: { width: 0, height: 0.4 }, shadowOpacity: 0.5
   },
   headerTitleStyle: {
