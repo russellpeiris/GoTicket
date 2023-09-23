@@ -8,7 +8,7 @@ import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 const UserProfile = () => {
   const navigation = useNavigation();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isVisible, setIsVisible] = useState({ DOB: false, dueDate: false });
   const [date, setDate] = useState({ DOB: new Date(), dueDate: new Date() });
 
@@ -101,6 +101,8 @@ const UserProfile = () => {
         }
       } catch (error) {
         console.error('Error fetching user data: ', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 

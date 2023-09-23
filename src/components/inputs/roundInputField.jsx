@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   inputContainerStyle: {
     margin: 0,
     borderRadius: dimen.inputBorderRadius,
-    fontSize:typography.small,
+    fontSize:typography.default,
     borderWidth: 1,
     height: 50,
     borderColor: colors.borderGray,
