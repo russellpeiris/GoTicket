@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { DateSlider } from '../components';
 const Home = () => {
   const navigation = useNavigation();
 
@@ -10,7 +11,7 @@ const Home = () => {
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
-          <Text>Dashboard</Text>
+            <DateSlider/>
         </ScrollView>
       </GestureHandlerRootView>
     </SafeAreaView>

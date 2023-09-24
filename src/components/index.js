@@ -5,3 +5,4 @@ export * from './inputs/datePicker.jsx';
 export * from './buttons/backArrow.jsx';
 export * from './inputs/roundInputField.jsx'
 export * from './inputs/descInputField.jsx'
+export * from './dateSlider.jsx'

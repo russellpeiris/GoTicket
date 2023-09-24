@@ -27,6 +27,7 @@ const BottomNavigation = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
+        headerTitleStyle: styles.headerTitleStyle,
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         tabBarInactiveTintColor: colors.inactiveGray,
@@ -42,7 +43,6 @@ const BottomNavigation = () => {
         component={UserProfile}
         options={({ navigation, route }) => ({
           title: 'Profile',
-          headerTitleStyle: styles.headerTitleStyle,
           headerShown: true,
           headerLeft: () => <BackArrow />,
         })}
@@ -52,7 +52,6 @@ const BottomNavigation = () => {
         component={Doctors}
         options={({ navigation, route }) => ({
           title: 'Doctors',
-          headerTitleStyle: styles.headerTitleStyle,
           headerShown: true,
           headerLeft: () => <BackArrow />,
         })}
@@ -62,7 +61,6 @@ const BottomNavigation = () => {
         component={Menu}
         options={({ navigation, route }) => ({
           title: 'Menu',
-          headerTitleStyle: styles.headerTitleStyle,
           headerShown: true,
           headerLeft: () => <BackArrow />,
         })}
