@@ -1,17 +1,18 @@
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { DateSlider } from '../components';
 const Home = () => {
   const navigation = useNavigation();
 
   return (
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
-      <ScrollView >
-      <Text>Dashboard</Text>
-      </ScrollView>
+        <ScrollView>
+            <DateSlider/>
+        </ScrollView>
       </GestureHandlerRootView>
     </SafeAreaView>
   );
@@ -24,5 +25,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'white',
     height: '100%',
-  }
+  },
 });
