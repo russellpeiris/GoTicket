@@ -1,34 +1,33 @@
-import {
-  eachWeekOfInterval,
-  eachDayOfInterval,
-  subDays,
-  addDays,
-  startOfWeek,
-  day,
-  format,
-} from 'date-fns';
 import PagerView, { PagerViewOnPageSelectedEvent } from 'react-native-pager-view';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
+import { format } from 'date-fns';
 import { useState } from 'react';
 import React from 'react';
 
-const startDate = subDays(new Date(), 7);
+const currentDate = new Date();
+const currentDay = currentDate.getDate();
 
-const endDate = addDays(new Date(), 7);
+const numGroups = 3;
+const daysToShow = 2;
 
-const dates = eachWeekOfInterval({
-  start: startDate,
-  end: endDate,
-}).reduce((acc, date) => {
-  const allDays = eachDayOfInterval({
-    start: subDays(date, 2),
-    end: addDays(date, 2),
-  });
+const dateGroups = [];
 
-  acc.push(allDays);
-  return acc;
-}, []);
+for (let i = 0; i < numGroups; i++) {
+  const centerDate = new Date(currentDate);
+  centerDate.setDate(currentDay + (i - 1) * 5); // Adjust the center date for each group
+
+  const group = [];
+
+  for (let j = -daysToShow; j <= daysToShow; j++) {
+    const date = new Date(centerDate);
+    date.setDate(centerDate.getDate() + j);
+    group.push(date);
+  }
+
+  dateGroups.push(group);
+}
+
 export const DateSlider = () => {
   const [currentPage, setCurrentPage] = useState(1); // Current page index
   const handlePageChange = (event) => {
@@ -41,7 +40,7 @@ export const DateSlider = () => {
   return (
     <View>
       <PagerView style={styles.slider} initialPage={1} onPageSelected={handlePageChange}>
-        {dates.map((week, index) => {
+        {dateGroups.map((week, index) => {
           return (
             <View key={index} style={{}}>
               <View style={styles.weeks}>
@@ -49,7 +48,7 @@ export const DateSlider = () => {
                   const dayName = format(day, 'EEE');
                   const today = isToday(day);
                   return (
-                    <View key={index} style={(today ? styles.today : styles.day)}>
+                    <View key={index} style={today ? styles.today : styles.day}>
                       <Text style={today ? styles.todayText : styles.dayText}>{dayName}</Text>
                       <Text style={today ? styles.todayText : styles.dayText}>{day.getDate()}</Text>
                     </View>
