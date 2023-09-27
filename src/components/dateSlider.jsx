@@ -39,7 +39,7 @@ export const DateSlider = () => {
     return date.getDate() === new Date().getDate();
   }
   return (
-    <View style={{ flex: 1, padding: dimen.default }}>
+    <View>
       <PagerView style={styles.slider} initialPage={1} onPageSelected={handlePageChange}>
         {dates.map((week, index) => {
           return (
@@ -67,7 +67,7 @@ export const DateSlider = () => {
 const styles = StyleSheet.create({
   slider: {
     flex: 1,
-    height: 80,
+    height: 90,
   },
   weeks: {
     backgroundColor: 'white',
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     borderRadius: 11,
   },
   dayText: {
-    fontFamily: typography.semiBold,
+    fontFamily: typography.bold,
+    color: colors.inactiveGray,
   },
   today: {
     flexDirection: 'column',

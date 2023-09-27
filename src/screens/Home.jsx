@@ -3,7 +3,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { DateSlider } from '../components';
+import { ArticleCard, DateSlider, InsightCard } from '../components';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { colors, dimen, typography } from '../../theme';
 const Home = () => {
   const navigation = useNavigation();
 
@@ -11,7 +13,29 @@ const Home = () => {
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
+<View>
+            <View style={styles.header}>
+              <Text style={styles.greeting}>
+                Hello Samantha!
+              </Text>
+              <FontAwesome5 name="bell" size={24} color="black" />
+            </View>
+            <View>
+            </View>
+            <Text style={styles.weekText}>Week 1</Text>
+            </View>
             <DateSlider/>
+            <View style={{paddingTop: 16}}>
+            <ArticleCard title='title' content='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel libero nec nunc viverra posuere. Fusce euismod ex sit amet quam tincidunt, sed convallis eros varius. Proin euismod metus quis justo malesuada,  '
+            imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
+            />
+            </View>
+            <View style={styles.insights}>
+            <Text style={styles.subTop}>My Daily Insights</Text>
+            <View>
+            <InsightCard/>
+            </View>
+            </View>
         </ScrollView>
       </GestureHandlerRootView>
     </SafeAreaView>
@@ -25,5 +49,30 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'white',
     height: '100%',
+    padding: dimen.default
   },
+  header: {
+    paddingTop: dimen.default,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  weekText: {
+    fontFamily: typography.bold,
+    fontSize: typography.subTitle,
+    paddingVertical: dimen.default,
+  },
+  greeting: {
+    fontFamily: typography.semiBold,
+    fontSize: typography.default,
+  },
+  subTop: {
+    fontFamily: typography.semiBold,
+    fontSize: typography.default,
+  },
+  insights: {
+    paddingVertical: 28,
+  }
 });
+

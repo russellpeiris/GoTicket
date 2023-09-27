@@ -11,7 +11,7 @@ export const colors = {
   infoNavy: '#363853',
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
-  inactiveGray: '#686868',
+  inactiveGray: '#999999',
 };
 
 // Typography
