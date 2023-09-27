@@ -112,6 +112,8 @@ const SignUp = () => {
         const userDoc = await setDoc(userDocRef, userData);
       } catch (error) {
         console.log('error: ', error);
+      } finally {
+        setIsLoading(false);
       }
     } catch (error) {
       error && setIsLoading(false);
