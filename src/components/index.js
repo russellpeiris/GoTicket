@@ -6,3 +6,5 @@ export * from './buttons/backArrow.jsx';
 export * from './inputs/roundInputField.jsx'
 export * from './inputs/descInputField.jsx'
 export * from './dateSlider.jsx'
+export * from './articleCard.jsx'
+export * from './insightCard.jsx'
