@@ -30,10 +30,13 @@ const Home = () => {
             imageUrl={'https://i.imgur.com/UYiroysl.jpg'}
             />
             </View>
-            <View style={styles.insights}>
+            <View style={styles.insightsContainer}>
             <Text style={styles.subTop}>My Daily Insights</Text>
-            <View>
-            <InsightCard/>
+            <View style={styles.insights}>
+            <InsightCard title={null} />
+            <InsightCard title='Mood' value='happy'/>
+            <InsightCard title='BMI' value='18.5'/>
+            <InsightCard title='BP' value='110/68'/>
             </View>
             </View>
         </ScrollView>
@@ -71,8 +74,15 @@ const styles = StyleSheet.create({
     fontFamily: typography.semiBold,
     fontSize: typography.default,
   },
-  insights: {
+  insightsContainer: {
     paddingVertical: 28,
-  }
+  },
+  insights: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 16,
+  },
 });
 
