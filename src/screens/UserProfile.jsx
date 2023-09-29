@@ -18,11 +18,11 @@ const UserProfile = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     emergencyContact: '',
     dateOfBirth: '',
     city: '',
-    expectedDueDate: '',
+    dueDate: '',
     height: '',
     medicalHistory: '',
   });
@@ -30,11 +30,11 @@ const UserProfile = () => {
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     emergencyContact: '',
     dateOfBirth: '',
     city: '',
-    expectedDueDate: '',
+    dueDate: '',
     height: '',
     medicalHistory: '',
   });
@@ -62,8 +62,8 @@ const UserProfile = () => {
           setDate({ ...date, dueDate: currentDate });
           if (Platform.OS === 'android') {
             toggleDatePicker(type);
-            setUserInfo({ ...userInfo, expectedDueDate: currentDate.toDateString() });
-            setError((prevError) => ({ ...prevError, expectedDueDate: '' }));
+            setUserInfo({ ...userInfo, dueDate: currentDate.toDateString() });
+            setError((prevError) => ({ ...prevError, dueDate: '' }));
           }
           break;
       }
@@ -71,13 +71,12 @@ const UserProfile = () => {
       toggleDatePicker(type);
     }
   };
+  const userId = auth.currentUser.uid; // Get the currently logged in user data
   const updateUser = async () => {
     setIsLoading(true);
     try {
-      const userId = auth.currentUser.uid; // Get the currently logged in user data
       const userRef = doc(db, 'users', userId);
 
-      // Update the user document with the new data
       await setDoc(userRef, userInfo, { merge: true });
       console.log('User data updated successfully');
     } catch (error) {
@@ -91,7 +90,6 @@ const UserProfile = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const userId = auth.currentUser.uid; // Get the currently logged-in user's UID
     const userRef = doc(db, 'users', userId);
 
     const fetchUserData = async () => {
@@ -173,16 +171,16 @@ const UserProfile = () => {
                 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
               >
                 <RoundInputField
-                  value={userInfo.phone}
+                  value={userInfo.phoneNumber}
                   onChangeText={(value) => {
-                    setUserInfo({ ...userInfo, phone: value });
-                    setError((prevError) => ({ ...prevError, phone: '' }));
+                    setUserInfo({ ...userInfo, phoneNumber: value });
+                    setError((prevError) => ({ ...prevError, phoneNumber: '' }));
                   }}
-                  errorMessage={error.phone}
+                  errorMessage={error.phoneNumber}
                   type={'tel'}
                   onBlur={() => {}}
                   width="47%"
-                  label="Phone"
+                  label="phoneNumber"
                   placeholder="07X-XXX-XXXX"
                 />
                 <RoundInputField
@@ -264,13 +262,13 @@ const UserProfile = () => {
                   onPress={() => toggleDatePicker('dueDate')}
                 >
                   <RoundInputField
-                    value={userInfo.expectedDueDate}
+                    value={userInfo.dueDate}
                     onChangeText={(value) => {
-                      setUserInfo({ ...userInfo, expectedDueDate: value.toDateString() });
+                      setUserInfo({ ...userInfo, dueDate: value.toDateString() });
                       setDate(new Date(value));
-                      setError((prevError) => ({ ...prevError, expectedDueDate: '' }));
+                      setError((prevError) => ({ ...prevError, dueDate: '' }));
                     }}
-                    errorMessage={error.expectedDueDate}
+                    errorMessage={error.dueDate}
                     type={'text'}
                     onBlur={() => {}}
                     width="100%"
@@ -328,7 +326,7 @@ const styles = StyleSheet.create({
   formContainer: {
     margin: dimen.default,
     padding: dimen.default,
-    borderColor: colors.borderGray, // Use your theme variable or specify a color directly
+    borderColor: colors.borderGray, 
     borderWidth: 1,
     borderRadius: 10,
   },
