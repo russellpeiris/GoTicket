@@ -8,18 +8,21 @@ import React from 'react';
 const currentDate = new Date();
 const currentDay = currentDate.getDate();
 
-const numGroups = 3;
-const daysToShow = 2;
-
+const numGroups = 5;
+const daysToShow = 5;
+// 5 -> 2
+// 7 -> 3
+// 9 -> 4
 const dateGroups = [];
-
+const midGroup = Math.floor(numGroups / 2);
+const midDay = Math.floor(daysToShow / 2);
 for (let i = 0; i < numGroups; i++) {
   const centerDate = new Date(currentDate);
-  centerDate.setDate(currentDay + (i - 1) * 5); // Adjust the center date for each group
+  centerDate.setDate(currentDay + (-midGroup + i) * 5); // Adjust the center date for each group
 
   const group = [];
 
-  for (let j = -daysToShow; j <= daysToShow; j++) {
+  for (let j = -midDay; j <= midDay; j++) {
     const date = new Date(centerDate);
     date.setDate(centerDate.getDate() + j);
     group.push(date);
@@ -39,7 +42,7 @@ export const DateSlider = () => {
   }
   return (
     <View>
-      <PagerView style={styles.slider} initialPage={1} onPageSelected={handlePageChange}>
+      <PagerView style={styles.slider} initialPage={midGroup} onPageSelected={handlePageChange}>
         {dateGroups.map((week, index) => {
           return (
             <View key={index} style={{}}>

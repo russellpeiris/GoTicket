@@ -14,12 +14,18 @@ export const InsightCard = ({ title, value, icon }) => {
   }
   return (
     <View style={title ? styles.container : styles.addContainer}>
-{  title ?    <View style={styles.textHolder}>
-        <Text style={styles.title}>{title}</Text>
-        {icon ? <Text style={styles.emoji}>{icon}</Text> : <Text style={styles.text}>{value}</Text>}
-      </View> :       
-          <AddIcon/>
-        }
+      {title ? (
+        <View style={styles.textHolder}>
+          <Text style={styles.title}>{title}</Text>
+          {icon ? (
+            <Text style={styles.emoji}>{icon}</Text>
+          ) : (
+            <Text style={styles.text}>{value}</Text>
+          )}
+        </View>
+      ) : (
+        <AddIcon />
+      )}
     </View>
   );
 };
@@ -62,5 +68,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 99,
     width: 78,
-  }
+  },
 });

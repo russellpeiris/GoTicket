@@ -1,11 +1,12 @@
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
-import { ArticleCard, DateSlider, InsightCard } from '../components';
+import { ArticleCard, DateSlider, InputField, InsightCard } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
+import { AppointmentCard } from '../components/appointmentCard';
 const Home = () => {
   const navigation = useNavigation();
 
@@ -13,6 +14,7 @@ const Home = () => {
     <SafeAreaView>
       <GestureHandlerRootView style={styles.container}>
         <ScrollView>
+          <View style= {{padding: 16}}>
           <View>
             <View style={styles.header}>
               <Text style={styles.greeting}>Hello Samantha!</Text>
@@ -41,12 +43,13 @@ const Home = () => {
           <View>
             <Text style={styles.subTop}>Upcoming Appointments</Text>
             <View style={styles.appointments}>
-              
+              <AppointmentCard/>
             </View>
+          </View>
           </View>
         </ScrollView>
       </GestureHandlerRootView>
-    </SafeAreaView>
+      </SafeAreaView>
   );
 };
 
@@ -57,7 +60,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'white',
     height: '100%',
-    padding: dimen.default,
   },
   header: {
     paddingTop: dimen.default,
@@ -89,4 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
   },
+  appointments: {
+    paddingTop: 16,
+  }
 });
