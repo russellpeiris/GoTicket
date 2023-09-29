@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useLoader } from '../../context/LoaderContext';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
+import User from '../../models/User';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -91,30 +92,24 @@ const SignUp = () => {
     }
     setIsLoading(true);
     try {
-      // Step 1: Create the user in Firebase Authentication
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         inputs.email,
         inputs.password
       );
-      // Step 2: Store additional user data in Firestore
       const { user } = userCredential;
       const userDocRef = doc(db, 'users', user.uid);
 
-      const userData = {
-        firstName: inputs.firstName,
-        lastName: inputs.lastName,
-        email: inputs.email,
-        phoneNumber: inputs.phoneNumber,
-        dueDate: inputs.dueDate || '',
-      };
-      try {
-        const userDoc = await setDoc(userDocRef, userData);
-      } catch (error) {
-        console.log('error: ', error);
-      } finally {
-        setIsLoading(false);
-      }
+      const newUser = new User(
+        inputs.firstName,
+        inputs.lastName,
+        inputs.email,
+        inputs.phoneNumber,
+        inputs.dueDate || ''
+      );
+      const userData = { ...newUser };
+
+      await setDoc(userDocRef, userData);
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
@@ -125,6 +120,8 @@ const SignUp = () => {
         email: errorMessages.email,
         password: errorMessages.password,
       }));
+    } finally {
+      setIsLoading(false);
     }
   };
 

@@ -12,6 +12,7 @@ export const colors = {
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
   inactiveGray: '#999999',
+  disabled: '#c4c4c4'
 };
 
 // Typography
