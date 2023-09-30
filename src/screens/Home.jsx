@@ -1,4 +1,4 @@
-import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { GestureHandlerRootView, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { ArticleCard, DateSlider, InputField, InsightCard } from '../components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -7,8 +7,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import React from 'react';
 import { AppointmentCard } from '../components/appointmentCard';
+
 const Home = () => {
   const navigation = useNavigation();
+  const handlePress = () => {
+    // Navigate to the 'DailyInsights' screen
+    navigation.navigate('DailyInsights');
+  };
 
   return (
     <SafeAreaView>
@@ -34,7 +39,9 @@ const Home = () => {
           <View style={styles.insightsContainer}>
             <Text style={styles.subTop}>My Daily Insights</Text>
             <View style={styles.insights}>
+              <TouchableOpacity onPress={handlePress}>
               <InsightCard title={null} />
+              </TouchableOpacity>
               <InsightCard title="Mood" value="happy" />
               <InsightCard title="BMI" value="18.5" />
               <InsightCard title="BP" value="110/68" />

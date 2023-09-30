@@ -10,12 +10,11 @@ const currentDay = currentDate.getDate();
 
 const numGroups = 5;
 const daysToShow = 5;
-// 5 -> 2
-// 7 -> 3
-// 9 -> 4
 const dateGroups = [];
+
 const midGroup = Math.floor(numGroups / 2);
 const midDay = Math.floor(daysToShow / 2);
+
 for (let i = 0; i < numGroups; i++) {
   const centerDate = new Date(currentDate);
   centerDate.setDate(currentDay + (-midGroup + i) * 5); // Adjust the center date for each group

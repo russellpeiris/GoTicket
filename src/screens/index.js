@@ -4,5 +4,6 @@ import Login from './auth/Login';
 import Doctors from './Doctors';
 import Home from './Home';
 import Menu from './Menu';
+import DailyInsights from './DailyInsights';
 
-export { Home, SignUp, Login, UserProfile, Doctors, Menu };
+export { Home, SignUp, Login, UserProfile, Doctors, Menu, DailyInsights };
