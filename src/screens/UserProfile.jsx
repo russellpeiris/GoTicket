@@ -180,7 +180,7 @@ const UserProfile = () => {
                   type={'tel'}
                   onBlur={() => {}}
                   width="47%"
-                  label="phoneNumber"
+                  label="Phone Number"
                   placeholder="07X-XXX-XXXX"
                 />
                 <RoundInputField

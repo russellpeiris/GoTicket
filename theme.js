@@ -8,6 +8,7 @@ export const colors = {
   descriptionGray: '#666666',
   back: '#000000',
   borderGray: '#E8E8E8',
+  count: '#F3F3F3',
   infoNavy: '#363853',
   sunshineYellow: '#FAC010',
   royalPurple: '#6A7AFA',
