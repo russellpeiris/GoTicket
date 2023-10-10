@@ -1,10 +1,11 @@
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
+import { DailyInsights, Doctors, Home, Menu, UserProfile } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Doctors, Home, Menu, UserProfile } from '../screens';
+import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
+import { colors, dimen, typography } from '../../theme';
 import { StyleSheet, View } from 'react-native';
 import { BackArrow } from '../components';
-import {colors, dimen, typography} from '../../theme';
 import React from 'react';
 
 const Tab = createBottomTabNavigator();
@@ -33,8 +34,7 @@ const BottomNavigation = () => {
         tabBarInactiveTintColor: colors.inactiveGray,
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: colors.primaryPink,
-        tabBarIcon: ({ color, size, focused }) =>
-          getTabBarIcon(route, focused, color),
+        tabBarIcon: ({ color, size, focused }) => getTabBarIcon(route, focused, color),
       })}
     >
       <Tab.Screen name="Dashboard" component={Home} />
@@ -65,6 +65,13 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
+      <Tab.Screen name="DailyInsights" component={DailyInsights} options={({navigation, route})=> ({
+        title: 'Daily Insights',
+        headerShown: true,
+        tabBarItemStyle: {display: 'none'},
+        tabBarStyle: {display: 'none'},
+        headerLeft: () => <BackArrow />,
+      })} />
     </Tab.Navigator>
   );
 };
@@ -94,5 +101,5 @@ const styles = StyleSheet.create({
   headerTitleStyle: {
     fontFamily: typography.bold,
     fontSize: typography.titleBar,
-  }
+  },
 });
