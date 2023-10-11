@@ -11,8 +11,7 @@ import { AppointmentCard } from '../components/appointmentCard';
 const Home = () => {
   const navigation = useNavigation();
   const handlePress = () => {
-    // Navigate to the 'DailyInsights' screen
-    navigation.navigate('DailyInsights');
+    console.log('add navigation')
   };
 
   return (

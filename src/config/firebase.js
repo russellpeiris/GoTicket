@@ -4,12 +4,12 @@ import { getFirestore, setDoc, doc, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyA_JudvElNsrENi9O0bCZAiwpltyJn3Zo8',
-  authDomain: 'sample-b8dee.firebaseapp.com',
-  projectId: 'sample-b8dee',
-  storageBucket: 'sample-b8dee.appspot.com',
-  messagingSenderId: '967558148369',
-  appId: '1:967558148369:web:eeebfaf360af3710ab1cb0',
+  apiKey: "AIzaSyD6VxP1C6wHVpsYdUQRMGObtEaOYB9hOjc",
+  authDomain: "goticket-56757.firebaseapp.com",
+  projectId: "goticket-56757",
+  storageBucket: "goticket-56757.appspot.com",
+  messagingSenderId: "158739808795",
+  appId: "1:158739808795:web:b86dded94f811491f8eebe"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -19,4 +19,4 @@ const auth = initializeAuth(app, {
 });
 const db = getFirestore(app); // Initialize Firestore
 
-export { auth, db, setDoc, doc, getDocs };
+export { auth, db, setDoc, doc, getDocs }

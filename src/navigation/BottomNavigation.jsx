@@ -65,13 +65,6 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
       />
-      <Tab.Screen name="DailyInsights" component={DailyInsights} options={({navigation, route})=> ({
-        title: 'Daily Insights',
-        headerShown: true,
-        tabBarItemStyle: {display: 'none'},
-        tabBarStyle: {display: 'none'},
-        headerLeft: () => <BackArrow />,
-      })} />
     </Tab.Navigator>
   );
 };
