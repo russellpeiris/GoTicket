@@ -13,18 +13,21 @@ export const InputField = ({
   password,
   editable,
   type,
-  label
+  label,
+  width
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hidePass, setHidePass] = useState(password);
   const inputContainerStyle = {
     ...styles.inputContainerStyle,
     borderColor: isFocused ? colors.primaryPink : errorMessage ? colors.error : colors.borderGray,
-    height: 65,
+    height: 48,     width: width ? width : '100%',
+
   };
 
   return (
     <View style={{width: '100%'}}>
+            <Text style={{ fontSize: typography.default, fontFamily: typography.medium, marginBottom: 12 }}>{label}</Text>
     <Input
       inputStyle={styles.inputStyle}
       placeholder={placeholder}
@@ -67,7 +70,6 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   inputContainerStyle: {
-    width: '100%',
     margin: 0,
     borderRadius: 8,
     borderWidth: 1,
