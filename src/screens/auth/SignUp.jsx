@@ -2,7 +2,8 @@ import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, View } from 'rea
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import { PrimaryButton, InputField, Loader, DatePicker } from '../../components';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, db, doc, setDoc } from '../../config/firebase';
+import { auth, db, doc, setDoc, rdb } from '../../config/firebase';
+import { getDatabase, ref, set } from "firebase/database";
 import { getErrorMessage } from '../../utils/errorMessages';
 import { colors, dimen, typography } from '../../../theme';
 import { useNavigation } from '@react-navigation/native';
@@ -97,19 +98,27 @@ const SignUp = () => {
         inputs.email,
         inputs.password
       );
+
       const { user } = userCredential;
-      const userDocRef = doc(db, 'users', user.uid);
-
-      const newUser = new User(
-        inputs.firstName,
-        inputs.lastName,
-        inputs.email,
-        inputs.phoneNumber,
-        inputs.dueDate || ''
-      );
-      const userData = { ...newUser };
-
-      await setDoc(userDocRef, userData);
+     
+      // Reference to the location where user data will be stored
+      const userRef = ref(rdb, `users/${user.uid}`);
+  
+      const newUser = {
+        firstname: inputs.firstName,
+        lastname: inputs.lastName,
+        email: inputs.email,
+        contactNo: inputs.phoneNumber,
+      };
+  
+      // Insert user data into the Firebase Realtime Database
+      await set(userRef, newUser).then(() => {
+        //data saved successfully
+        alert('data submitted');
+        
+      }).catch((error) => {
+         alert(error);
+      });
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
