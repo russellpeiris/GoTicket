@@ -1,5 +1,14 @@
+import {
+  DailyInsights,
+  Doctors,
+  Home,
+  Menu,
+  UserProfile,
+  TopUp,
+  VisaCards,
+  AddVisa,
+} from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
-import { DailyInsights, Doctors, Home, Menu, UserProfile } from '../screens';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +28,7 @@ const BottomNavigation = () => {
       return <AvatarIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     } else if (route.name === 'Doctors') {
       return <DoctorIcon width={dimen.icon} height={dimen.icon} fill={color} />;
-    } else if (route.name === 'Menu') {
+    } else if (route.name === 'VisaCards') {
       return <MenuIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     }
   };
@@ -37,7 +46,7 @@ const BottomNavigation = () => {
         tabBarIcon: ({ color, size, focused }) => getTabBarIcon(route, focused, color),
       })}
     >
-      <Tab.Screen name="Dashboard" component={Home} />
+      <Tab.Screen name="Dashboard" component={TopUp} />
       <Tab.Screen
         name="Profile"
         component={UserProfile}
@@ -48,22 +57,26 @@ const BottomNavigation = () => {
         })}
       />
       <Tab.Screen
-        name="Doctors"
-        component={Doctors}
+        name="VisaCards"
+        component={VisaCards}
         options={({ navigation, route }) => ({
-          title: 'Doctors',
+          title: 'Your Cards',
           headerShown: true,
+          // tabBarItemStyle: {display: 'none'},
+          // tabBarStyle: {display: 'none'},
           headerLeft: () => <BackArrow />,
         })}
       />
       <Tab.Screen
-        name="Menu"
-        component={Menu}
+        name="AddVisa"
         options={({ navigation, route }) => ({
-          title: 'Menu',
+          title: 'Add a card',
           headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
           headerLeft: () => <BackArrow />,
         })}
+        component={AddVisa}
       />
     </Tab.Navigator>
   );

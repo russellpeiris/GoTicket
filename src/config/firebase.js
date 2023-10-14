@@ -2,14 +2,16 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
 import { getFirestore, setDoc, doc, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD6VxP1C6wHVpsYdUQRMGObtEaOYB9hOjc",
-  authDomain: "goticket-56757.firebaseapp.com",
-  projectId: "goticket-56757",
-  storageBucket: "goticket-56757.appspot.com",
-  messagingSenderId: "158739808795",
-  appId: "1:158739808795:web:b86dded94f811491f8eebe"
+  apiKey: "AIzaSyCdzDwEi9sEa90EWcbkCYOQ_AL-ASnL9qw",
+  authDomain: "goticket-d73bb.firebaseapp.com",
+  databaseURL: "https://goticket-d73bb-default-rtdb.firebaseio.com",
+  projectId: "goticket-d73bb",
+  storageBucket: "goticket-d73bb.appspot.com",
+  messagingSenderId: "753202050140",
+  appId: "1:753202050140:web:6fee00b3384a88050de299"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,5 +20,6 @@ const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
 const db = getFirestore(app); // Initialize Firestore
+const rdb = getDatabase(app); // initialize real time database
 
-export { auth, db, setDoc, doc, getDocs }
+export { auth, db, setDoc, doc, getDocs, rdb }
