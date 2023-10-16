@@ -31,6 +31,7 @@ const BottomNavigation = () => {
     } else if (route.name === 'VisaCards') {
       return <MenuIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     }
+ 
   };
 
   return (
@@ -58,7 +59,7 @@ const BottomNavigation = () => {
       />
       <Tab.Screen
         name="VisaCards"
-        component={VisaCards}
+        component={Menu}
         options={({ navigation, route }) => ({
           title: 'Your Cards',
           headerShown: true,

@@ -11,6 +11,7 @@ import { useLoader } from '../../context/LoaderContext';
 import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
 import User from '../../models/User';
+import QRCode from 'react-native-qrcode-svg';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -19,31 +20,18 @@ const SignUp = () => {
     email: '',
     password: '',
     phoneNumber: '',
-    dueDate: '',
+    balance: '',
   });
-  const [date, setDate] = useState(new Date());
+
   const [error, setError] = useState({ email: '', password: '' });
   const { isLoading, setIsLoading } = useLoader();
   const [isVisible, setIsVisible] = useState(false);
   const navigation = useNavigation();
 
-  const toggleDatePicker = () => {
-    setIsVisible(!isVisible);
-  };
-
-  const handlePicker = (event, selectedDate) => {
-    if (event.type == 'set') {
-      const currentDate = selectedDate;
-      setDate(currentDate);
-
-      if (Platform.OS === 'android') {
-        toggleDatePicker();
-        setInputs({ ...inputs, dueDate: currentDate.toDateString() });
-        setError((prevError) => ({ ...prevError, dueDate: '' }));
-      }
-    } else {
-      toggleDatePicker();
-    }
+  const generateQRCode = (data) => {
+    // Generate QR code based on user data (you can modify this based on your requirement)
+    const qrCodeData = JSON.stringify(data);
+    return qrCodeData;
   };
 
   const handleSignUp = async () => {
@@ -53,7 +41,6 @@ const SignUp = () => {
       email: '',
       password: '',
       phoneNumber: '',
-      dueDate: '',
     });
 
     if (!inputs.firstName) {
@@ -99,6 +86,17 @@ const SignUp = () => {
         inputs.password
       );
 
+      // Generate QR code for the user
+      const qrCodeData = generateQRCode({
+
+        firstname:inputs.firstName,
+        lastname: inputs.lastName,
+        email: inputs.email,
+        contactNo: inputs.phoneNumber,
+        balance: inputs.balance,
+
+      });
+
       const { user } = userCredential;
      
       // Reference to the location where user data will be stored
@@ -109,7 +107,11 @@ const SignUp = () => {
         lastname: inputs.lastName,
         email: inputs.email,
         contactNo: inputs.phoneNumber,
+        balance: inputs.balance,
+        qrCodeData: qrCodeData,
       };
+
+
   
       // Insert user data into the Firebase Realtime Database
       await set(userRef, newUser).then(() => {
@@ -277,23 +279,30 @@ const SignUp = () => {
                 type={'tel'}
                 max
               />
-              {isVisible && (
-                <DatePicker mode="date" display="spinner" value={date} onChange={handlePicker} />
-              )}
-              <Pressable onPress={toggleDatePicker}>
-                <InputField
-                  placeholder="Expected due date"
-                  value={inputs.dueDate}
-                  onChangeText={(value) => {
-                    setInputs({ ...inputs, dueDate: value.toDateString() });
-                    setDate(new Date(value));
-                    setError((prevError) => ({ ...prevError, dueDate: '' }));
-                  }}
-                  editable={false}
-                  errorMessage={error.dueDate}
-                />
-              </Pressable>
+            
             </View>
+            <View style={{ alignItems: 'center', marginVertical: 20 }}>
+            <Text
+                style={{
+                  fontFamily: typography.medium,
+                  marginBottom: 20,
+                  marginHorizontal: 3,
+                  fontSize: typography.default,
+                }}
+              >
+                Your QR Code
+              </Text>
+                <QRCode
+                  value={generateQRCode({
+                    firstname:inputs.firstName,
+                    lastname: inputs.lastName,
+                    email: inputs.email,
+                    contactNo: inputs.phoneNumber,
+                    balance:inputs.balance,                
+                  })}
+                  size={150}
+                />
+              </View>
             <View>
               <Text
                 style={{

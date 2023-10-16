@@ -7,75 +7,35 @@ import { colors, dimen, typography } from '../../theme';
 import { useLoader } from '../context/LoaderContext';
 import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+
 const UserProfile = () => {
   const navigation = useNavigation();
   const { isLoading, setIsLoading } = useLoader(() => {
     setIsLoading(true);
   });
   const [isVisible, setIsVisible] = useState({ DOB: false, dueDate: false });
-  const [date, setDate] = useState({ DOB: new Date(), dueDate: new Date() });
   const [error, setError] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: '',
-    emergencyContact: '',
-    dateOfBirth: '',
-    city: '',
-    dueDate: '',
-    height: '',
-    medicalHistory: '',
+    balance: '',
   });
   const [userInfo, setUserInfo] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phoneNumber: '',
-    emergencyContact: '',
-    dateOfBirth: '',
-    city: '',
-    dueDate: '',
-    height: '',
-    medicalHistory: '',
+    balance: '',
   });
-  const toggleDatePicker = (type) => {
-    if (type == 'DOB') {
-      setIsVisible({ ...isVisible, DOB: !isVisible.DOB });
-    } else {
-      setIsVisible({ ...isVisible, dueDate: !isVisible.dueDate });
-    }
-  };
-
-  const handlePicker = (event, selectedDate, type) => {
-    if (event.type == 'set') {
-      const currentDate = selectedDate;
-      switch (type) {
-        case 'DOB':
-          setDate({ ...date, DOB: currentDate });
-          if (Platform.OS === 'android') {
-            toggleDatePicker(type);
-            setUserInfo({ ...userInfo, dateOfBirth: currentDate.toDateString() });
-            setError((prevError) => ({ ...prevError, dateOfBirth: '' }));
-          }
-          break;
-        case 'dueDate':
-          setDate({ ...date, dueDate: currentDate });
-          if (Platform.OS === 'android') {
-            toggleDatePicker(type);
-            setUserInfo({ ...userInfo, dueDate: currentDate.toDateString() });
-            setError((prevError) => ({ ...prevError, dueDate: '' }));
-          }
-          break;
-      }
-    } else {
-      toggleDatePicker(type);
-    }
-  };
+  
   const userId = auth.currentUser.uid; // Get the currently logged in user data
+
   const updateUser = async () => {
     setIsLoading(true);
-    try {
-      const userRef = doc(db, 'users', userId);
+    try {   
+       // Reference to the location where user data will be stored
+       const userRef = ref(rdb, `users/${user.uid}`);
 
       await setDoc(userRef, userInfo, { merge: true });
       console.log('User data updated successfully');

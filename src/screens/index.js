@@ -4,5 +4,6 @@ import Login from './auth/Login';
 import TopUp from './TopUp';
 import VisaCards from './VisaCards';
 import AddVisa from './AddVisa';
+import Menu from './Menu';
 
-export { SignUp, Login, UserProfile, TopUp, VisaCards, AddVisa };
+export { SignUp, Login, UserProfile, TopUp, VisaCards, AddVisa, Menu };
