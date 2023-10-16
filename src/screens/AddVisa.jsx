@@ -1,16 +1,28 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { InputField, PrimaryButton } from '../components';
+import { rdb, ref, set } from '../config/firebase';
 import { colors, typography } from '../../theme';
-import { TouchableOpacity } from 'react-native';
+import { push } from 'firebase/database';
 import React, { useState } from 'react';
 import { Visa } from '../models';
 const AddVisa = () => {
-const [visa, setVisa] = useState(new Visa());
+  const [visa, setVisa] = useState(new Visa());
 
-  const handleAddCard = () => {
-    // TODO: Implement add card functionality
-  };
+  async function handleAddCard() {
+    try {
+      console.log('object')
+      await set(ref(rdb, 'visas/'), visa).then(() => {
+        //data saved successfully
+        alert('data submitted');
+        
+      }).catch((error) => {
+         alert(error);
+      });
+    } catch (error) {
+      console.error('Error adding Visa card:', error);
+    }
+  }
   return (
     <SafeAreaView style={styles.addCardContainer}>
       <Text style={styles.addCardTitle}>Add Card</Text>
@@ -30,30 +42,36 @@ const [visa, setVisa] = useState(new Visa());
           setVisa({ ...visa, cardHolderName: value });
         }}
       />
-      <View style={{flexDirection: 'row', justifyContent: 'space-between', display: 'flex', width: '100%'}}>
-        <View style={{width: '47%', marginHorizontal: 0}}>
-
-        <InputField
-          label="Expiry Month"
-          placeholder="MM"
-          value={visa.expiryMonth}
-          onChangeText={(value) => {
-            setVisa({ ...visa, expiryMonth: value });
-          }}
-        />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          display: 'flex',
+          width: '100%',
+        }}
+      >
+        <View style={{ width: '47%', marginHorizontal: 0 }}>
+          <InputField
+            label="Expiry Month"
+            placeholder="MM"
+            value={visa.expiryMonth}
+            onChangeText={(value) => {
+              setVisa({ ...visa, expiryMonth: value });
+            }}
+          />
         </View>
-        <View style={{width: '47%', marginHorizontal: 0}}>
-        <InputField
-          label="Expiry Year"
-          placeholder="YY"
-          value={visa.expiryYear}
-          onChangeText={(value) => {
-            setVisa({ ...visa, expiryYear: value });
-          }}
-        />
+        <View style={{ width: '47%', marginHorizontal: 0 }}>
+          <InputField
+            label="Expiry Year"
+            placeholder="YY"
+            value={visa.expiryYear}
+            onChangeText={(value) => {
+              setVisa({ ...visa, expiryYear: value });
+            }}
+          />
         </View>
       </View>
-      
+
       <PrimaryButton text="Continue" onPress={handleAddCard} />
     </SafeAreaView>
   );
