@@ -34,7 +34,7 @@ const TopUp = () => {
           </View>
           <MultipleSelector onSelectionChange={handleSelectionChange} buttonList={buttonList} />
           <InputField label="Enter amount" placeholder="Enter Amount" 
-            value={topUpAmount}
+            value={topUpAmount.toString()}
             onChangeText={setTopUpAmount}
           />
           <Text style={styles.minAmount}>Minimum Rs. 500</Text>
