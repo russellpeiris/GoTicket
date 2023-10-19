@@ -1,5 +1,6 @@
 export * from './inputs/inputField.jsx';
 export * from './buttons/primaryButton.jsx';
+export * from './buttons/menuButtons.jsx';
 export * from './loader.jsx';
 export * from './inputs/datePicker.jsx';
 export * from './buttons/backArrow.jsx';

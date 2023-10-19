@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { Text } from '@rneui/themed';
 import User from '../../models/User';
 import QRCode from 'react-native-qrcode-svg';
+import { QRPopUp } from '..';
 
 const SignUp = () => {
   const [inputs, setInputs] = useState({
@@ -20,13 +21,13 @@ const SignUp = () => {
     email: '',
     password: '',
     phoneNumber: '',
-    balance: '',
   });
 
   const [error, setError] = useState({ email: '', password: '' });
   const { isLoading, setIsLoading } = useLoader();
   const [isVisible, setIsVisible] = useState(false);
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const generateQRCode = (data) => {
     // Generate QR code based on user data (you can modify this based on your requirement)
@@ -88,12 +89,13 @@ const SignUp = () => {
 
       // Generate QR code for the user
       const qrCodeData = generateQRCode({
-
+        
+        //userID: user.uid,
         firstname:inputs.firstName,
         lastname: inputs.lastName,
         email: inputs.email,
         contactNo: inputs.phoneNumber,
-        balance: inputs.balance,
+        balance: 0,
 
       });
 
@@ -107,20 +109,21 @@ const SignUp = () => {
         lastname: inputs.lastName,
         email: inputs.email,
         contactNo: inputs.phoneNumber,
-        balance: inputs.balance,
+        balance: 0,
         qrCodeData: qrCodeData,
       };
 
-
-  
       // Insert user data into the Firebase Realtime Database
       await set(userRef, newUser).then(() => {
         //data saved successfully
-        alert('data submitted');
+        //alert('data submitted');
         
       }).catch((error) => {
          alert(error);
       });
+
+      setModalVisible(true);
+
     } catch (error) {
       error && setIsLoading(false);
       const errorCode = error.code;
@@ -185,14 +188,14 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.replace('Home');
-      }
-    });
-    return unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigation.replace('Home');
+  //     }
+  //   });
+  //   return unsubscribe;
+  // }, []);
 
   return (
     <>
@@ -278,31 +281,8 @@ const SignUp = () => {
                 errorMessage={error.phoneNumber}
                 type={'tel'}
                 max
-              />
-            
+              />            
             </View>
-            <View style={{ alignItems: 'center', marginVertical: 20 }}>
-            <Text
-                style={{
-                  fontFamily: typography.medium,
-                  marginBottom: 20,
-                  marginHorizontal: 3,
-                  fontSize: typography.default,
-                }}
-              >
-                Your QR Code
-              </Text>
-                <QRCode
-                  value={generateQRCode({
-                    firstname:inputs.firstName,
-                    lastname: inputs.lastName,
-                    email: inputs.email,
-                    contactNo: inputs.phoneNumber,
-                    balance:inputs.balance,                
-                  })}
-                  size={150}
-                />
-              </View>
             <View>
               <Text
                 style={{
@@ -321,6 +301,18 @@ const SignUp = () => {
           </ScrollView>
         </GestureHandlerRootView>
       </KeyboardAvoidingView>
+      <QRPopUp
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+        qrCodeData={generateQRCode({
+          firstname: inputs.firstName,
+          lastname: inputs.lastName,
+          email: inputs.email,
+          contactNo: inputs.phoneNumber,
+          balance: 0,
+        })}
+        onContinue={() => navigation.replace('Home')} // Navigate to Home on Continue
+      />
     </>
   );
 };

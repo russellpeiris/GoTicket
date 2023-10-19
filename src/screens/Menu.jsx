@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { PrimaryButton } from '../components';
 import { auth } from '../config/firebase';
 import React from 'react';
+import { MenuButton } from '../components/buttons/menuButtons';
 
 const Menu = () => {
   const navigation = useNavigation();
@@ -19,8 +20,14 @@ const Menu = () => {
   return (
     <>
       <GestureHandlerRootView style={styles.container}>
-        <ScrollView style={{ padding: 16 }}>
-          <PrimaryButton text="Logout" onPress={handleSignOut} />
+        <ScrollView style={{ padding: 16}}>       
+           <MenuButton text="User Profile" onPress={() => navigation.navigate('Menu')} 
+          />
+           <View style={styles.buttonGap} /> 
+           <MenuButton text="View QR Code" onPress={() => navigation.navigate('ViewQR')} 
+          />
+           <View style={styles.buttonGap} /> 
+          <MenuButton text="Logout" onPress={handleSignOut} />
         </ScrollView>
       </GestureHandlerRootView>
     </>
@@ -34,5 +41,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     backgroundColor: 'white',
     height: '100%',
+    alignItems: 'center',
   },
+  buttonGap: {
+    marginTop:16,
+  }
 });

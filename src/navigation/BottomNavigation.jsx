@@ -7,6 +7,11 @@ import {
   TopUp,
   VisaCards,
   AddVisa,
+  ViewQR,
+  Dashboard,
+  AllPass,
+  BusData,
+  EarningsScreen,
 } from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -28,7 +33,7 @@ const BottomNavigation = () => {
       return <AvatarIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     } else if (route.name === 'Doctors') {
       return <DoctorIcon width={dimen.icon} height={dimen.icon} fill={color} />;
-    } else if (route.name === 'VisaCards') {
+    } else if (route.name === 'Menu') {
       return <MenuIcon width={dimen.icon} height={dimen.icon} fill={color} />;
     }
  
@@ -58,10 +63,10 @@ const BottomNavigation = () => {
         })}
       />
       <Tab.Screen
-        name="VisaCards"
+        name="Menu"
         component={Menu}
         options={({ navigation, route }) => ({
-          title: 'Your Cards',
+          title: 'Menu',
           headerShown: true,
           // tabBarItemStyle: {display: 'none'},
           // tabBarStyle: {display: 'none'},
@@ -78,6 +83,17 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}
         component={AddVisa}
+      />
+        <Tab.Screen
+        name="ViewQR"
+        component={ViewQR}
+        options={({ navigation, route }) => ({
+          title: 'User QR',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}      
       />
     </Tab.Navigator>
   );
