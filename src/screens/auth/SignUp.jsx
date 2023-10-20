@@ -96,6 +96,7 @@ const SignUp = () => {
         email: inputs.email,
         contactNo: inputs.phoneNumber,
         balance: 0,
+        status: false,
 
       });
 
@@ -310,6 +311,7 @@ const SignUp = () => {
           email: inputs.email,
           contactNo: inputs.phoneNumber,
           balance: 0,
+          status: false,
         })}
         onContinue={() => navigation.replace('Home')} // Navigate to Home on Continue
       />

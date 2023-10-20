@@ -12,6 +12,7 @@ import {
   AllPass,
   BusData,
   EarningsScreen,
+  ScanQRCode,
 } from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

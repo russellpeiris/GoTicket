@@ -26,6 +26,9 @@ const Menu = () => {
            <View style={styles.buttonGap} /> 
            <MenuButton text="View QR Code" onPress={() => navigation.navigate('ViewQR')} 
           />
+          <View style={styles.buttonGap} /> 
+           <MenuButton text="Scan Passengers" onPress={() => navigation.navigate('ScanQRCode')} 
+          />
            <View style={styles.buttonGap} /> 
           <MenuButton text="Logout" onPress={handleSignOut} />
         </ScrollView>
