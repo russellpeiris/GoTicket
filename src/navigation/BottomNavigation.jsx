@@ -100,7 +100,7 @@ const BottomNavigation = () => {
         name="VisaCards"
         component={VisaCards}
         options={({ navigation, route }) => ({
-          title: 'User QR',
+          title: 'Debit Cards',
           headerShown: true,
           tabBarItemStyle: { display: 'none' },
           tabBarStyle: { display: 'none' },
