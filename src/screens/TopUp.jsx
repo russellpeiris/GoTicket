@@ -6,6 +6,7 @@ import { typography } from '../../theme';
 import { Button } from '@rneui/base';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+
 const TopUp = () => {
   const navigation = useNavigation();
   const [topUpAmount, setTopUpAmount] = useState(0);

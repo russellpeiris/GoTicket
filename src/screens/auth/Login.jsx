@@ -61,9 +61,15 @@ const Login = () => {
     }
   };
   useEffect(() => {
+
+    const conductorRegex = /^[A-Za-z0-9._%+-]+@goticket\.com$/;
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
+      if (!conductorRegex.test(user.email)) {
         navigation.replace('Home');
+      }
+      else {
+        navigation.replace('Dashboard');
       }
     });
     return unsubscribe;
