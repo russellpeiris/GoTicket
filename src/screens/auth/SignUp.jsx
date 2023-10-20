@@ -288,6 +288,7 @@ const SignUp = () => {
                 onBlur={() => validate('phoneNumber')}
                 errorMessage={error.phoneNumber}
                 type={'tel'}
+                dataType={'tel'}
                 max
               />            
             </View>

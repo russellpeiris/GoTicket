@@ -138,6 +138,7 @@ const UserProfile = () => {
                   }}
                   errorMessage={error.phoneNumber}
                   type={'tel'}
+                  dataType={'tel'}
                   onBlur={() => {}}
                   width="47%"
                   label="Phone Number"
