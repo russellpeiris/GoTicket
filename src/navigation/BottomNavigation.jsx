@@ -96,6 +96,18 @@ const BottomNavigation = () => {
           headerLeft: () => <BackArrow />,
         })}      
       />
+        <Tab.Screen
+        name="VisaCards"
+        component={VisaCards}
+        options={({ navigation, route }) => ({
+          title: 'User QR',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}      
+      />
+
     </Tab.Navigator>
   );
 };

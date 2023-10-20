@@ -31,6 +31,8 @@ const Menu = () => {
           />
            <View style={styles.buttonGap} /> 
           <MenuButton text="Logout" onPress={handleSignOut} />
+          <View style={styles.buttonGap} /> 
+          <MenuButton text="My Debit Cards" onPress={() => navigation.navigate('VisaCards')}  />
         </ScrollView>
       </GestureHandlerRootView>
     </>

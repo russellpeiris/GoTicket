@@ -13,8 +13,10 @@ export const RoundInputField = ({
   password,
   editable,
   type,
+  dataType,
   label,
   width,
+  maxLength,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hidePass, setHidePass] = useState(password);
@@ -48,7 +50,7 @@ export const RoundInputField = ({
         editable={editable}
         leftIcon={leftIcon}
         inputMode={type}
-        maxLength={type === 'tel' ? 10 : null}
+        maxLength={dataType === 'tel' ? 10 : maxLength ? maxLength : null}
         rightIcon={
           password && {
             type: 'font-awesome',

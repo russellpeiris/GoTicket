@@ -13,8 +13,10 @@ export const InputField = ({
   password,
   editable,
   type,
+  dataType,
   label,
-  width
+  width,
+  maxLength
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hidePass, setHidePass] = useState(password);
@@ -24,7 +26,6 @@ export const InputField = ({
     height: 48,     width: width ? width : '100%',
 
   };
-
   return (
     <View style={{width: '100%'}}>
             <Text style={{ fontSize: typography.default, fontFamily: typography.medium, marginBottom: 12 }}>{label}</Text>
@@ -48,7 +49,7 @@ export const InputField = ({
       editable={editable}
       leftIcon={leftIcon}
       inputMode={type}
-      maxLength={type === 'tel' ? 10 : null}
+      maxLength={dataType === 'tel' ? 10 : maxLength ? maxLength : null}
       rightIcon={
         password && {
           type: 'font-awesome',
