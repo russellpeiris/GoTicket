@@ -20,7 +20,7 @@ export const MenuButton = ({ text, onPress, width, height, icon }) => {
         onPress={onPress}
         containerStyle={{}}
         buttonStyle={buttonStyles}
-        titleStyle={styles.textStyles}
+        titleStyle={styles.textStyles} 
         title={text}
         iconRight={true}
         icon={icon}

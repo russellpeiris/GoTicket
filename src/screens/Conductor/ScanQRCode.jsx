@@ -3,15 +3,19 @@ import Geolocation from 'react-native-geolocation-service';
 import { View, Text } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useEffect, useState } from 'react';
+import OnBoardDone from './onBoardDone';
+// import * as Location from 'expo-location';
 
 const ScanQRCode = () => {
 
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
+    const [isVisible, setIsVisible] = useState(false);
+    const [boardVisible, setBoardVisible] = useState(false);
 
     useEffect(() => {
         (async () => {
-          const { status } = await Camera.requestPermissionsAsync();
+          const { status } = await Camera.requestCameraPermissionsAsync();
           setHasPermission(status === 'granted');
         })();
       }, []);
@@ -22,6 +26,7 @@ const ScanQRCode = () => {
 
       if (qrCodeData.status === false) {
         await handleBoardingQRScan(qrCodeData);
+        setBoardVisible(true);
 
         qrCodeData.status = true; // Set the status to true after boarding
       } else {
@@ -91,6 +96,22 @@ const ScanQRCode = () => {
     });
   };
 
+  // const getExpoLocation = async () => {
+  //   try {
+  //     const { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       console.log('Location permission denied');
+  //       return null;
+  //     }
+
+  //     const location = await Location.getCurrentPositionAsync({});
+  //     return location.coords;
+  //   } catch (error) {
+  //     console.error('Error getting location:', error);
+  //     return null;
+  //   }
+  // };
+
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Radius of the Earth in kilometers
     const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -124,6 +145,7 @@ const ScanQRCode = () => {
 
   // Rest of your component's rendering and JSX
   return (
+    <>
     <View style={{ flex: 1 }}>
       <Camera
         style={{ flex: 1 }}
@@ -142,7 +164,22 @@ const ScanQRCode = () => {
           </Text>
         </View>
       </Camera>
-    </View>
+    </View> 
+
+    <OnBoardDone
+    visible={boardVisible}
+    onRequestClose={() => setBoardVisible(false)}
+    qrCodeData={generateQRCode({
+      firstname: inputs.firstName,
+      lastname: inputs.lastName,
+      email: inputs.email,
+      contactNo: inputs.phoneNumber,
+      balance: 0,
+      status: false,
+    })}
+    onContinue={handleContinue} // Navigate to Home on Continue
+    />
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ import { useRoute } from "@react-navigation/native";
 
 export default function ScanQR() {
   const route = useRoute();
-  const formData = route.params.formData;
+  //const formData = route.params.formData;
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Not yet scanned");
@@ -36,14 +36,14 @@ export default function ScanQR() {
   };
 
   // Check permissions and return the screens
-  if (hasPermission === null) {
+  if (hasPermission === false) {
     return (
       <View style={styles.container}>
         <Text>Requesting camera permission</Text>
       </View>
     );
   }
-  if (hasPermission === false) {
+  if (hasPermission === null) {
     return (
       <View style={styles.container}>
         <Text style={{ margin: 10 }}>No access to camera</Text>
@@ -58,7 +58,7 @@ export default function ScanQR() {
   // Return the View with ImageBackground
   return (
     <ImageBackground
-      source={require("../Images/bg.png")}
+      source={require("../../assets/bg.png")}
       style={styles.backgroundImage}
     >
       <View style={styles.container}>

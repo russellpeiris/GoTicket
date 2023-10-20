@@ -13,9 +13,11 @@ import BusData from './Conductor/BusData';
 import EarningsScreen from './Conductor/EarningsScreen';
 import EarningsStore from './Conductor/EarningsStore';
 import ScanQRCode from './Conductor/ScanQRCode';
+import ScanQR from './Conductor/ScanQR';
+import OnBoardDone from './Conductor/onBoardDone';
 
 
 export { SignUp, Login, UserProfile, TopUp, VisaCards, AddVisa, Menu, ViewQR, QRPopUp, Dashboard, AllPass,
-        BusData, EarningsScreen, EarningsStore, ScanQRCode };
+        BusData, EarningsScreen, EarningsStore, ScanQRCode, ScanQR, OnBoardDone };
 
 

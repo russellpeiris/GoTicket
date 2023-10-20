@@ -13,6 +13,7 @@ import {
     BusData,
     EarningsScreen,
     ScanQRCode,
+    ScanQR,
   } from '../screens';
   import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
   import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -134,6 +135,17 @@ import {
         component={ScanQRCode}
         options={({ navigation, route }) => ({
           title: 'User QR',
+          headerShown: true,
+          tabBarItemStyle: { display: 'none' },
+          tabBarStyle: { display: 'none' },
+          headerLeft: () => <BackArrow />,
+        })}      
+      />
+        <Tab.Screen
+        name="ScanQR"
+        component={ScanQR}
+        options={({ navigation, route }) => ({
+          title: 'Scan QR',
           headerShown: true,
           tabBarItemStyle: { display: 'none' },
           tabBarStyle: { display: 'none' },

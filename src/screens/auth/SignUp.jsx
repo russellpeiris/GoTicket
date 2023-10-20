@@ -97,7 +97,7 @@ const SignUp = () => {
         contactNo: inputs.phoneNumber,
         balance: 0,
         status: false,
-
+        visitor: true,
       });
 
       const { user } = userCredential;
@@ -111,6 +111,8 @@ const SignUp = () => {
         email: inputs.email,
         contactNo: inputs.phoneNumber,
         balance: 0,
+        status: false,
+        visitor: true,
         qrCodeData: qrCodeData,
       };
 
@@ -189,14 +191,19 @@ const SignUp = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       navigation.replace('Home');
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, []);
+  const handleContinue = () => {
+    const conductorRegex = /^[A-Za-z0-9._%+-]+@goticket\.com$/;
+
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!conductorRegex.test(user.email)) {
+        navigation.replace('Home');
+      }
+      else {
+        navigation.replace('Dashboard');
+      }
+    });
+    return unsubscribe;
+  };
 
   return (
     <>
@@ -313,7 +320,7 @@ const SignUp = () => {
           balance: 0,
           status: false,
         })}
-        onContinue={() => navigation.replace('Home')} // Navigate to Home on Continue
+        onContinue={handleContinue} // Navigate to Home on Continue
       />
     </>
   );
