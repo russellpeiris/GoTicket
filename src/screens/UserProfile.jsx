@@ -1,10 +1,11 @@
 import { DatePicker, DescInputField, Loader, PrimaryButton, RoundInputField } from '../components';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import { auth, db, setDoc, doc, ref, rdb } from '../config/firebase';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { auth, db, setDoc, doc } from '../config/firebase';
 import { useNavigation } from '@react-navigation/native';
 import { colors, dimen, typography } from '../../theme';
 import { useLoader } from '../context/LoaderContext';
+import { get, set } from 'firebase/database';
 import { getDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 
@@ -22,22 +23,21 @@ const UserProfile = () => {
     balance: '',
   });
   const [userInfo, setUserInfo] = useState({
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     email: '',
-    phoneNumber: '',
+    contactNo: '',
     balance: '',
   });
-  
-  const userId = auth.currentUser.uid; // Get the currently logged in user data
 
+  const userId = auth.currentUser.uid;
   const updateUser = async () => {
     setIsLoading(true);
-    try {   
-       // Reference to the location where user data will be stored
-       const userRef = ref(rdb, `users/${user.uid}`);
+    try {
+      const userRef = ref(rdb, `users/${userId}`);
 
-      await setDoc(userRef, userInfo, { merge: true });
+      // Update user data using set method
+      await set(userRef, userInfo);
       console.log('User data updated successfully');
     } catch (error) {
       error && setIsLoading(false);
@@ -50,15 +50,21 @@ const UserProfile = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const userRef = doc(db, 'users', userId);
+    const userRef = ref(rdb, `users/${userId}`);
 
     const fetchUserData = async () => {
       try {
-        const documentSnapshot = await getDoc(userRef);
+        const dataSnapshot = await get(userRef);
 
-        if (documentSnapshot.exists()) {
-          const data = documentSnapshot.data();
-          setUserInfo((prevUserInfo) => ({ ...prevUserInfo, ...data }));
+        if (dataSnapshot.exists()) {
+          // Extract user data from the snapshot
+          const userData = dataSnapshot.val();
+          console.log('userData: ', userData);
+
+          // Update the state with user data
+          setUserInfo((prevUserInfo) => ({ ...prevUserInfo, ...userData }));
+        } else {
+          console.log('User data not found.');
         }
       } catch (error) {
         console.error('Error fetching user data: ', error);
@@ -68,12 +74,12 @@ const UserProfile = () => {
     };
 
     fetchUserData();
-  }, []);
+  }, [userId]);
 
   return (
     <>
       <GestureHandlerRootView style={styles.container}>
-        <ScrollView >
+        <ScrollView>
           <View style={styles.formContainer}>
             <Text
               style={{
@@ -89,9 +95,9 @@ const UserProfile = () => {
                 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
               >
                 <RoundInputField
-                  value={userInfo.firstName}
+                  value={userInfo.firstname}
                   onChangeText={(value) => {
-                    setUserInfo({ ...userInfo, firstName: value });
+                    setUserInfo({ ...userInfo, firstname: value });
                     setError((prevError) => ({ ...prevError, firstName: '' }));
                   }}
                   errorMessage={error.firstName}
@@ -102,9 +108,9 @@ const UserProfile = () => {
                   placeholder="First name"
                 />
                 <RoundInputField
-                  value={userInfo.lastName}
+                  value={userInfo.lastname}
                   onChangeText={(value) => {
-                    setUserInfo({ ...userInfo, lastName: value });
+                    setUserInfo({ ...userInfo, lastname: value });
                     setError((prevError) => ({ ...prevError, lastName: '' }));
                   }}
                   errorMessage={error.lastName}
@@ -131,9 +137,9 @@ const UserProfile = () => {
                 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
               >
                 <RoundInputField
-                  value={userInfo.phoneNumber}
+                  value={userInfo.contactNo}
                   onChangeText={(value) => {
-                    setUserInfo({ ...userInfo, phoneNumber: value });
+                    setUserInfo({ ...userInfo, contactNo: value });
                     setError((prevError) => ({ ...prevError, phoneNumber: '' }));
                   }}
                   errorMessage={error.phoneNumber}
@@ -165,7 +171,7 @@ const styles = StyleSheet.create({
   formContainer: {
     margin: dimen.default,
     padding: dimen.default,
-    borderColor: colors.borderGray, 
+    borderColor: colors.borderGray,
     borderWidth: 1,
     borderRadius: 10,
   },
