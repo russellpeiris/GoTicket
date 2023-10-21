@@ -16,7 +16,7 @@ const Login = () => {
   const [error, setError] = useState({ email: '', password: '' });
   const { isLoading, setIsLoading } = useLoader();
   const navigation = useNavigation();
-  const handleSignUp = async () => {
+  const handleSignIn = async () => {
     setError({ email: '', password: '' });
 
     if (!email) {
@@ -107,7 +107,7 @@ const Login = () => {
               />
             </View>
             <View style={styles.buttonContainer}>
-              <PrimaryButton onPress={handleSignUp} text="Login" />
+              <PrimaryButton onPress={handleSignIn} text="Login" />
             </View>
             <View>
               <Text

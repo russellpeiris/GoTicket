@@ -3,7 +3,11 @@ import Geolocation from 'react-native-geolocation-service';
 import { View, Text } from 'react-native';
 import { Camera } from 'expo-camera';
 import { useEffect, useState } from 'react';
-import OnBoardDone from './onBoardDone';
+import BoardPop from './BoardPop';
+import AlightPop from './AlightPop';
+import * as Location from 'expo-location';
+
+
 // import * as Location from 'expo-location';
 
 const ScanQRCode = () => {
@@ -12,6 +16,7 @@ const ScanQRCode = () => {
     const [type, setType] = useState(Camera.Constants.Type.back);
     const [isVisible, setIsVisible] = useState(false);
     const [boardVisible, setBoardVisible] = useState(false);
+    const [alightVisible, setAlightVisible] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -26,12 +31,13 @@ const ScanQRCode = () => {
 
       if (qrCodeData.status === false) {
         await handleBoardingQRScan(qrCodeData);
-        setBoardVisible(true);
-
         qrCodeData.status = true; // Set the status to true after boarding
+        setBoardVisible(true);
+      
       } else {
         await handleAlightingQRScan(qrCodeData);
         qrCodeData.status = false; // Set the status to false after alighting
+        setAlightVisible(true);    
       }
     } catch (error) {
       console.error('Error handling QR code:', error);
@@ -42,11 +48,13 @@ const ScanQRCode = () => {
     try {
       const { userId, firstName, balance } = userData;
 
+       // Reset status to true for the next alighting
+       userData.status = true;
+
       // Get the user's current location
       const boardingLocation = await getLocation();
 
-      // Reset status to true for the next alighting
-      userData.status = true;
+     
     } catch (error) {
       console.error('Error handling boarding QR scan:', error);
     }
@@ -81,36 +89,36 @@ const ScanQRCode = () => {
     }
   };
 
-  const getLocation = () => {
-    return new Promise((resolve, reject) => {
-      Geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          resolve({ latitude, longitude });
-        },
-        (error) => {
-          reject(error);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-      );
-    });
-  };
-
-  // const getExpoLocation = async () => {
-  //   try {
-  //     const { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== 'granted') {
-  //       console.log('Location permission denied');
-  //       return null;
-  //     }
-
-  //     const location = await Location.getCurrentPositionAsync({});
-  //     return location.coords;
-  //   } catch (error) {
-  //     console.error('Error getting location:', error);
-  //     return null;
-  //   }
+  // const getLocation = () => {
+  //   return new Promise((resolve, reject) => {
+  //     Geolocation.getCurrentPosition(
+  //       (position) => {
+  //         const { latitude, longitude } = position.coords;
+  //         resolve({ latitude, longitude });
+  //       },
+  //       (error) => {
+  //         reject(error);
+  //       },
+  //       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  //     );
+  //   });
   // };
+
+  const getLocation = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Location permission denied');
+        return null;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      return location.coords;
+    } catch (error) {
+      console.error('Error getting location:', error);
+      return null;
+    }
+  };
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // Radius of the Earth in kilometers
@@ -127,21 +135,6 @@ const ScanQRCode = () => {
     return distance;
   };
 
-//   const getLocation = async () => {
-//     try {
-//       const { status } = await Location.requestForegroundPermissionsAsync();
-//       if (status !== 'granted') {
-//         console.log('Location permission denied');
-//         return null;
-//       }
-
-//       const location = await Location.getCurrentPositionAsync({});
-//       return location.coords;
-//     } catch (error) {
-//       console.error('Error getting location:', error);
-//       return null;
-//     }
-//   };
 
   // Rest of your component's rendering and JSX
   return (
@@ -166,19 +159,17 @@ const ScanQRCode = () => {
       </Camera>
     </View> 
 
-    <OnBoardDone
+    <BoardPop
     visible={boardVisible}
     onRequestClose={() => setBoardVisible(false)}
-    qrCodeData={generateQRCode({
-      firstname: inputs.firstName,
-      lastname: inputs.lastName,
-      email: inputs.email,
-      contactNo: inputs.phoneNumber,
-      balance: 0,
-      status: false,
-    })}
-    onContinue={handleContinue} // Navigate to Home on Continue
+    onContinue={() => setBoardVisible(false)} // Navigate to Home on Continue
     />
+    <AlightPop
+    visible={alightVisible}
+    onRequestClose={() => setAlightVisible(false)}
+    onContinue={() => setAlightVisible(false)} // Navigate to Home on Continue
+    />
+
     </>
   );
 };

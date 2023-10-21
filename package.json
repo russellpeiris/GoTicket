@@ -14,11 +14,13 @@
   "jest": {
     "preset": "jest-expo",
     "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"   
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ]
   },
   "babel": {
-    "presets": ["babel-preset-expo"]
+    "presets": [
+      "babel-preset-expo"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
@@ -55,7 +57,8 @@
     "react-native-scan-barcode": "^3.1.7",
     "react-native-simple-select-button": "^0.0.6",
     "react-native-svg": "13.9.0",
-    "react-native-vector-icons": "^10.0.0"
+    "react-native-vector-icons": "^10.0.0",
+    "expo-location": "~16.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.19",

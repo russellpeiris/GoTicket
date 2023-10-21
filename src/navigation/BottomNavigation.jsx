@@ -13,6 +13,7 @@ import {
   BusData,
   EarningsScreen,
   ScanQRCode,
+  UserDashboard,
 } from '../screens';
 import { MenuIcon, HomeIcon, AvatarIcon, DoctorIcon } from '../assets/icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -53,7 +54,7 @@ const BottomNavigation = () => {
         tabBarIcon: ({ color, size, focused }) => getTabBarIcon(route, focused, color),
       })}
     >
-      <Tab.Screen name="Dashboard" component={TopUp} />
+      <Tab.Screen name="Dashboard" component={UserDashboard} />
       <Tab.Screen
         name="Profile"
         component={UserProfile}

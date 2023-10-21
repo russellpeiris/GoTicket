@@ -31,11 +31,16 @@ const ViewQR = () => {
   
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.heading}>
-          <Text style={{ fontSize: 18 }}>Your QR Code</Text>
+       <View style={{marginBottom: '50%'}}>
+        <View>
+          <Text style={{ fontSize: 28, color: '#7D65EE' }}>Your QR Code</Text>
         </View>
         <View style={{ alignItems: 'center', marginTop: 20 }}>
           {qrCodeData && <QRCode value={qrCodeData} size={200} />} 
+        </View>
+        <View style={{marginTop: '12%'}}>
+          <Text style={{ fontSize: 20}}>Use this to travel and top up your GoTicket account.</Text>
+        </View>
         </View>
       </SafeAreaView>
     );
@@ -48,13 +53,15 @@ const ViewQR = () => {
       backgroundColor: 'white',
       padding: 16,
       justifyContent: 'center',
+     
     },
     heading: {
-      backgroundColor: 'aqua',
       padding: 16,
+      color: '#7D65EE',
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginBottom: '5%',
     },
   });
   

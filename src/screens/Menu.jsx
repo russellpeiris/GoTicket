@@ -29,10 +29,10 @@ const Menu = () => {
           <View style={styles.buttonGap} /> 
            <MenuButton text="Scan Passengers" onPress={() => navigation.navigate('ScanQRCode')} 
           />
-           <View style={styles.buttonGap} /> 
-          <MenuButton text="Logout" onPress={handleSignOut} />
           <View style={styles.buttonGap} /> 
           <MenuButton text="My Debit Cards" onPress={() => navigation.navigate('VisaCards')}  />
+          <View style={styles.buttonGap} /> 
+          <MenuButton text="Logout" onPress={handleSignOut} />
         </ScrollView>
       </GestureHandlerRootView>
     </>

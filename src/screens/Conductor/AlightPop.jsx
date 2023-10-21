@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Modal, TouchableOpacity } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
-const OnBoardDone = ({ visible, onRequestClose, qrCodeData, onContinue }) => {
+const AlightPop = ({ visible, onRequestClose,onContinue }) => {
   return (
     <Modal
       animationType="slide"
@@ -20,7 +20,7 @@ const OnBoardDone = ({ visible, onRequestClose, qrCodeData, onContinue }) => {
             elevation: 5,
           }}
         >
-          <Text style={{ fontSize: 18,color: 'white', marginBottom: 15 , marginTop: 10}}>User boarded successfully.</Text>
+          <Text style={{ fontSize: 18,color: 'white', marginBottom: 15 , marginTop: 10}}>User Alighted successfully.</Text>
           <Text style={{ fontSize: 15,color: 'white', marginBottom: 15 , marginTop: 15}}>This will be saved in your profile</Text>
           <TouchableOpacity onPress={() => {
             // Call the onContinue function passed as a prop
@@ -37,4 +37,4 @@ const OnBoardDone = ({ visible, onRequestClose, qrCodeData, onContinue }) => {
   );
 };
 
-export default OnBoardDone;
+export default AlightPop;

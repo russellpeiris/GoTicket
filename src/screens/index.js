@@ -14,10 +14,12 @@ import EarningsScreen from './Conductor/EarningsScreen';
 import EarningsStore from './Conductor/EarningsStore';
 import ScanQRCode from './Conductor/ScanQRCode';
 import ScanQR from './Conductor/ScanQR';
-import OnBoardDone from './Conductor/onBoardDone';
+import BoardPop from './Conductor/BoardPop';
+import UserDashboard from './UserDashboard';
+import AlightPop from './Conductor/AlightPop';
 
 
 export { SignUp, Login, UserProfile, TopUp, VisaCards, AddVisa, Menu, ViewQR, QRPopUp, Dashboard, AllPass,
-        BusData, EarningsScreen, EarningsStore, ScanQRCode, ScanQR, OnBoardDone };
+        BusData, EarningsScreen, EarningsStore, ScanQRCode, ScanQR,  BoardPop, UserDashboard, AlightPop};
 
 
